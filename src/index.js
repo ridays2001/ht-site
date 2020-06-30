@@ -14,7 +14,7 @@ const express = require('express');
 const { firestore: db } = require('./util/db');
 const app = express();
 
-app.set('port', 8080); // Use port 80 for hosting.
+app.set('port', process.env.PORT ?? 8080); // Use port 80 for hosting.
 
 app.set('views', path.join(__dirname, './views')); // Configure views folder to use for view engine.
 app.set('view engine', 'pug'); // Set view engine to pug.
@@ -70,6 +70,6 @@ app.use((err, req, res) => {
 });
 
 const server = http.createServer(app);
-server.listen(8080);
+server.listen(process.env.PORT ?? 8080);
 server.on('listening', onListening);
 server.on('error', onError);
