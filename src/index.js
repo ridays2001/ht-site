@@ -21,7 +21,7 @@ app.set('view engine', 'pug'); // Set view engine to pug.
 
 app.use(express.json()); // Parse incoming json requests.
 app.use(express.urlencoded({ extended: true })); // Parse the incoming requests to urlencoded payloads
-app.use(session({
+/* app.use(session({
 	secret: process.env.SECRET,
 	cookie: {
 		sameSite: 'lax',
@@ -31,7 +31,7 @@ app.use(session({
 		maxAge: 3600000
 	},
 	resave: true
-})); // Use sessions in the app.
+})); // Use sessions in the app. */
 app.use(cookieParser()); // Use cookies in the app.
 app.use(logger('dev')); // Use morgan logger to log http requests.
 app.use(express.static(path.join(__dirname, 'public'))); // Configure the public folder into the sitemap.
