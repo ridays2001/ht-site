@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="shortcut icon", href="../public/imgs/Logo - HT.png", type="image/x-icon")
+        title Login - Himaani Tutorials
+    body
+        div#login-area
+            form(action="/login", method="post")
+                label(for="username") Username
+                input(type="text", name="username" required)
+                br
+                label(for="pass") Password
+                input(type="password", name="pass" required)
+                br
+                input(type="submit", value="submit")
