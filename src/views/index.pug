@@ -4,7 +4,7 @@ html
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
 		title= 'Home - HT Online'
 		link(rel="shortcut icon", href="/imgs/icon2.png", type="image/x-icon")
-		link(rel="stylesheet", href="/css/index.css")
+		link(rel="stylesheet", href=`/css/index-${view}.css`)
 		link(rel="stylesheet", href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,400;1,700&family=Roboto&display=swap")
 	body
 		div#img
@@ -22,7 +22,7 @@ html
 		div#quotes
 			div#quote1
 				p “The ones who are crazy enough to think that they can change the world, are the ones who do it.”
-				p='- Steve Jobs'
+				p - Steve Jobs
 			div#quote2
 				p “Education is what remains after one has forgotten what one has learned in school.”
 				p - Albert Einstein
@@ -33,7 +33,7 @@ html
 				p “An investment in knowledge pays the best interest.”
 				p - Benjamin Franklin
 			div#quote5
-				p “A well-educated mind will always have more questions than answer.”
+				p “A well-educated mind will always have more questions than answers.”
 				p - Helen Keller
 				
 			
