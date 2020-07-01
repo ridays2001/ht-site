@@ -1,0 +1,95 @@
+/* The desktop view for the webpage. */
+html {
+	text-align: center;
+	background-color: #351e10;
+	color: #ffffff;
+	font-family: 'Merriweather', serif;
+	background-image: url('/imgs/books.png');
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color: #ffffff;
+	border: solid #ffffff 5px;
+	display: block;
+}
+
+a:hover, a:focus {
+	background-color: rgba(0, 127, 255, 0.7);
+	color: #ff69b4;
+}
+
+#quotes {
+	margin-top: 1%;
+	text-justify: inter-word;
+	color: #000000;
+	font-weight: bold;
+}
+
+img {
+	height: 25%;
+	width: 50%;
+	max-width: 85%;
+	max-height: 30%
+}
+
+#motto {
+	text-align: center;
+	font-size: 1.5em;
+	margin-right: 3%;
+	height: 5%
+}
+	
+#nav {
+    float: right;
+	width: 20%;
+	text-align: center;
+	margin-top: 3%;
+	margin-right: 1%;
+	font-size: 1.5em;
+}
+
+a {
+    padding: 5%;
+	width: 70%;
+	margin-bottom: 10%;
+	margin-top: 10%;
+}
+
+
+#quote1, #quote2, #quote3, #quote4, #quote5 {
+	padding: 1.5%;
+	background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 7vw;
+    float: left;
+    width: 30%;
+    height: 12%;
+}
+
+#quote1 {
+	margin-left: 2%;
+}
+
+#quote2 {
+	margin-right: 7%;
+	float: right;
+}
+
+#quote3 {
+	width: 50%;
+	height: 10%;
+	margin-top: 2%;
+	margin-left: 10%;
+}
+
+#quote4 {
+	margin-top: 2%;
+	margin-left: 5%;
+}
+	
+#quote5 {
+	margin-top: 2%;
+	margin-left: 2%;
+}
