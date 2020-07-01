@@ -36,7 +36,14 @@ app.use(cookieParser()); // Use cookies in the app.
 app.use(logger('dev')); // Use morgan logger to log http requests.
 app.use(express.static(path.join(__dirname, 'public'))); // Configure the public folder into the sitemap.
 
-app.get('/', (req, res) => res.render('index'));
+app.get('/', (req, res) => {
+	db.collection('data').doc('user-agents').set({ [Date.now()]: req.headers['user-agent'] }, { merge: true });
+	const viewport = req.headers['user-agent'].toLowerCase();
+	let device = undefined;
+	if (viewport.includes('android') || viewport.includes('iphone') || viewport.includes('ipad')) device = 'mobile';
+	else device = 'desktop';
+	res.render('index', { view: device });
+});
 
 app.get('/red', (_req, res) => res.redirect('/'));
 
