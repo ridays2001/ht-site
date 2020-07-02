@@ -9,9 +9,9 @@ const logger = require('morgan');
 const http = require('http');
 const { listening: onListening } = require('./util/listening');
 const { err: onError } = require('./util/error');
+const { firestore: db } = require('./util/db');
 
 const express = require('express');
-const { firestore: db } = require('./util/db');
 const app = express();
 
 app.set('port', process.env.PORT ?? 8080); // Use port 80 for hosting.
@@ -21,7 +21,8 @@ app.set('view engine', 'pug'); // Set view engine to pug.
 
 app.use(express.json()); // Parse incoming json requests.
 app.use(express.urlencoded({ extended: true })); // Parse the incoming requests to urlencoded payloads
-/* app.use(session({
+app.use(session({
+	name: 'welcome-to-hell',
 	secret: process.env.SECRET,
 	cookie: {
 		sameSite: 'lax',
@@ -30,14 +31,14 @@ app.use(express.urlencoded({ extended: true })); // Parse the incoming requests 
 		path: '/',
 		maxAge: 3600000
 	},
-	resave: true
-})); // Use sessions in the app. */
-app.use(cookieParser()); // Use cookies in the app.
+	resave: false,
+	saveUninitialized: true
+})); // Use sessions in the app.
+app.use(cookieParser(process.env.SECRET)); // Use cookies in the app.
 app.use(logger('dev')); // Use morgan logger to log http requests.
 app.use(express.static(path.join(__dirname, 'public'))); // Configure the public folder into the sitemap.
 
 app.get('/', (req, res) => {
-	db.collection('data').doc('user-agents').set({ [Date.now()]: req.headers['user-agent'] }, { merge: true });
 	const viewport = req.headers['user-agent'].toLowerCase();
 	let device = undefined;
 	if (viewport.includes('android') || viewport.includes('iphone') || viewport.includes('ipad')) device = 'mobile';
@@ -45,19 +46,21 @@ app.get('/', (req, res) => {
 	res.render('index', { view: device });
 });
 
-app.get('/red', (_req, res) => res.redirect('/'));
-
 app.use('/users', require('./users'));
 
-app.get('/login', (req, res) => res.render('login'));
+app.get('/login', (_req, res) => {
+	res.render('login');
+});
 
 app.post('/login', async (req, res) => {
 	const username = req.body.username;
 	const password = req.body.pass;
 	const { data } = await db.collection('users').doc(username).get()
 		.then(snap => snap.data());
-	const date = new Date((data.DOB._seconds * 1000) + 1.98e+7);
-	console.log(date);
+	if (!data) return res.redirect(303, '/login');
+	if (data.password === password) {
+		// Set a cookie. This chunk will be added in some time.
+	}
 	return res.redirect(303, '/login');
 });
 
