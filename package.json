@@ -33,6 +33,7 @@
     "firestore-db": "^1.0.5",
     "http-errors": "^1.8.0",
     "morgan": "^1.10.0",
+    "node-fetch": "^2.6.0",
     "pug": "^3.0.0"
   }
 }
