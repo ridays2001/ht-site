@@ -1,9 +1,12 @@
+/* Import font library. */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap');
+
 /* The desktop view for the webpage. */
 html {
 	text-align: center;
 	background-color: #351e10;
 	color: #ffffff;
-	font-family: 'Merriweather', serif;
+	font-family: 'Merriweather', Helvetica;
 	background-image: url('/imgs/books.png');
 	background-repeat: no-repeat;
 	background-size: cover;
@@ -31,8 +34,8 @@ a:hover, a:focus {
 img {
 	height: 25%;
 	width: 50%;
-	max-width: 85%;
-	max-height: 30%
+	max-width: 1280px;
+	max-height: 475px;
 }
 
 #motto {
