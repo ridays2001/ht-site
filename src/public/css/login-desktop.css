@@ -1,0 +1,59 @@
+/* Import font library. */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap');
+
+/* The desktop view for the webpage. */
+html {
+    text-align: center;
+    background-color: #351e10;
+	font-family: 'Merriweather', Helvetica;
+	background-image: url('/imgs/books.png');
+	background-repeat: no-repeat;
+    background-size: cover;
+    font-size: 1.5em;
+}
+
+#login-area {
+    margin: 0 auto;
+    margin-top: 8%;
+    padding: 1.5%;
+    border-radius: 7vw;
+    background-color: rgba(255, 255, 255, 0.75);
+    width: 30%;
+    display: block;
+    line-height: 2.5em;
+}
+
+img {
+	height: 22%;
+	width: 40%;
+	max-width: 1280px;
+	max-height: 475px;
+}
+
+#btn {
+    color: #ffffff;
+    font-size: 0.8rem;
+    margin-top: 5%;
+    background-color: #0069d9;
+    border: 1px solid transparent;
+    border-color: #0069d9;
+    border-radius: 5vw;
+    padding: 2% 5%;
+    width: 30%;
+    cursor: pointer;
+    line-height: 1.5rem;
+}
+
+.input {
+    border: solid 1px #0069d9;
+}
+
+#err {
+    color: #f51b00;
+    font-size: 0.8em;
+}
+
+#success {
+    color: #0069d9;
+    font-size: 0.8em;
+}
