@@ -1,17 +1,22 @@
-<!DOCTYPE html>
 html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         link(rel="shortcut icon", href="../public/imgs/Logo - HT.png", type="image/x-icon")
-        title Login - Himaani Tutorials
+        title Login - HT Online
+        link(rel="stylesheet", href=`/css/login-${view}.css`)
     body
-        div#login-area
-            form(action="/login", method="post")
-                label(for="username") Username
-                input(type="text", name="username" required)
+        a(href="/")
+            img(src="/imgs/logo-white.png", alt="Himaani Shah Tutorials")
+
+        div#login-area.col-3
+            p#err=err
+            p#success=success
+            form(action="/login", method="post", autocomplete="off")
+                label(for="username") Username &emsp;&emsp;
+                input.input(type="text", name="username" required)
                 br
-                label(for="pass") Password
-                input(type="password", name="pass" required)
+                label(for="pass") Password &emsp;&emsp;
+                input.input(type="password", name="pass" required)
                 br
-                input(type="submit", value="submit")
+                input#btn(type="submit", value="Log In")
