@@ -1,22 +1,23 @@
 html
 	head
-		meta(charset="UTF-8")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
 		title Home - HT Online
-		link(rel="shortcut icon", href="/imgs/icon2.png", type="image/x-icon")
-		link(rel="stylesheet", href=`/css/index-${view}.css`)
+		link(rel='shortcut icon', href='/imgs/icon2.png', type='image/x-icon')
+		link(rel='stylesheet', href=`/css/index-${view}.css`)
 	body
 		div#img
-				img(src="/imgs/logo-white.png", alt="Himaani Shah Tutorials")
+				img#main(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
 
 		div#motto
 			p Not just <em>‘teaching’</em>, but also <u><em>inspiring</em></u>.
 
 		div#nav
-			a(href="/login") Login
-			a(href="/contact") Contact
-			a(href="/tos") Terms of Service
-			a(href="/policy") Privacy Policy
+			a(href='/login')= loginButton
+			a(href='/contact') Contact
+			a(href='/terms') Terms &amp; Conditions
+			a(href='/privacy') Privacy Policy
+			a(href='/disclaimer') Disclaimer
 
 		div#quotes
 			div#quote1
@@ -34,5 +35,3 @@ html
 			div#quote5
 				p “A well-educated mind will always have more questions than answers.”
 				p - Helen Keller
-				
-			
