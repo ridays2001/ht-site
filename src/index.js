@@ -5,12 +5,12 @@ require('dotenv').config();
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const { flash } = require('express-flash-message');
 const logger = require('morgan');
 const http = require('http');
 const { listening: onListening } = require('./util/listening');
 const { err: onError } = require('./util/error');
-const { firestore: db } = require('./util/db');
-const { flash } = require('express-flash-message');
+const { authenticate } = require('./util/authenticate');
 
 const express = require('express');
 const app = express();
@@ -42,75 +42,76 @@ app.use(logger('dev')); // Use morgan logger to log http requests.
 app.use(express.static(path.join(__dirname, 'public'))); // Configure the public folder into the sitemap.
 
 app.get('/', async (req, res) => {
+	let loginButton = undefined;
+	const auth = await authenticate(undefined, req.cookies);
+	if (auth) loginButton = 'User Home';
+	else loginButton = 'Login';
 	const viewport = req.headers['user-agent'].toLowerCase();
 	let device = undefined;
 	if (viewport.includes('android') || viewport.includes('iphone') || viewport.includes('ipad')) device = 'mobile';
 	else device = 'desktop';
-	res.render('index', { view: device });
+	res.render('index', { view: device, loginButton });
 });
 
 app.use('/users', require('./users'));
 
 app.get('/login', async (req, res) => {
-	/* if (req.cookies.id || req.cookies.username) {
-		const username = req.cookies.username;
-		const id = req.cookies.id;
-		if (id && username) {
-			const data = await db.collection('users').doc(username).get()
-				.then(snap => snap.data()?.data ?? undefined);
-			if (data?.id === id) {
-				console.log('Redirected to users');
-				return res.redirect(301, `/users/${username}`);
-			}
-		}
+	// Check if the user already has saved login on their device.
+	if (req.cookies.id || req.cookies.username) {
+		const auth = await authenticate(undefined, req.cookies);
+		if (auth) return res.redirect(`/users/${req.cookies.username}`);
 		res.cookie('id', undefined, { maxAge: 100 });
 		res.cookie('username', undefined, { maxAge: 100 });
 		console.log('Cookies have deleted.');
-		return res.redirect(301, '/login');
-	} */
+		return res.redirect('/login');
+	}
 	const viewport = req.headers['user-agent'].toLowerCase();
 	let device = undefined;
 	if (viewport.includes('android') || viewport.includes('iphone') || viewport.includes('ipad')) device = 'mobile';
 	else device = 'desktop';
 	res.render('login', {
 		view: device,
-		err: await req.consumeFlash('error'),
-		success: await req.consumeFlash('success')
+		err: await req.consumeFlash('error')
 	});
 });
 
 app.post('/login', async (req, res) => {
-	const username = req.body.username;
-	const password = req.body.pass;
-	const data = await db.collection('users').doc(username).get()
-		.then(snap => snap.data()?.data ?? undefined);
+	const loginData = {
+		username: req.body.username,
+		password: req.body.pass,
+		id: req.session.id
+	};
+	const auth = await authenticate(loginData, undefined);
+	if (auth) {
+		res.cookie('username', loginData.username, {
+			maxAge: 3.154e+10,
+			sameSite: 'lax',
+			secure: true,
+			path: '/',
+			httpOnly: true
+		});
+		res.cookie('id', loginData.id, {
+			maxAge: 3.154e+10,
+			sameSite: 'lax',
+			secure: true,
+			path: '/',
+			httpOnly: true
+		});
+		console.log('Redirected to users page.');
+		return res.redirect(`/users/${loginData.username}`);
+	}
 
 	// Delete old cookies after 100 ms.
 	if (req.cookies.username) res.cookie('username', undefined, { maxAge: 100 });
 	if (req.cookies.id) res.cookie('id', undefined, { maxAge: 100 });
-	if (data?.password === password) {
-		data.id = req.session.id;
-		db.collection('users').doc(username).set({ data }, { merge: true });
-		res.cookie('username', data.username, {
-			maxAge: 3.154e+10,
-			sameSite: 'lax',
-			secure: true,
-			path: '/',
-			httpOnly: true
-		});
-		res.cookie('id', data.id, {
-			maxAge: 3.154e+10,
-			sameSite: 'lax',
-			secure: true,
-			path: '/',
-			httpOnly: true
-		});
-		console.log('Redirected to users');
-		return res.redirect('/users');
-	}
 	await req.flash('error', '❌ Incorrect Login Credentials.');
-	return res.redirect(303, '/login');
+	return res.redirect('/login');
 });
+
+app.get('/contact', (_req, res) => res.render('contact'));
+app.get('/terms', (_req, res) => res.render('terms'));
+app.get('/privacy', (_req, res) => res.render('privacy'));
+app.get('/disclaimer', (_req, res) => res.render('disclaimer'));
 
 app.use((_req, res) => {
 	res.status(404).redirect('/');
