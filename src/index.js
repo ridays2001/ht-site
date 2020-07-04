@@ -108,7 +108,13 @@ app.post('/login', async (req, res) => {
 	return res.redirect('/login');
 });
 
-app.get('/contact', (_req, res) => res.render('contact'));
+app.get('/contact', (req, res) => {
+	const viewport = req.headers['user-agent'].toLowerCase();
+	let device = undefined;
+	if (viewport.includes('android') || viewport.includes('iphone') || viewport.includes('ipad')) device = 'mobile';
+	else device = 'desktop';
+	res.render('contact', { view: device });
+});
 app.get('/terms', (_req, res) => res.render('terms'));
 app.get('/privacy', (_req, res) => res.render('privacy'));
 app.get('/disclaimer', (_req, res) => res.render('disclaimer'));
