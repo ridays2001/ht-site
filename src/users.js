@@ -1,27 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const { firestore: db } = require('./util/db');
+const { authenticate } = require('./util/authenticate');
 
 router.get('/', (req, res) => {
-	const id = req.cookies.id;
-	const username = req.cookies.username;
-	const data = db.collection('users').doc(username).get()
-		.then(snap => snap.data()?.data);
-	if (data?.id === id) return res.redirect(301, `/users/${username}`);
-	return res.redirect(303, '/login');
+	const auth = authenticate(undefined, req.cookies);
+	if (auth) return res.redirect(`/users/${req.cookies.username}`);
+	console.log('Redirected back to login page.');
+	return res.redirect(403, '/login');
 });
 
-router.get('/:user', (req, res) => {
-	if (!req.params.user) return res.status(403).redirect('/');
-	const id = req.cookies.id;
-	const username = req.cookies.username;
-	if (id && username) {
-		const data = db.collection('users').doc(username).get()
-			.then(snap => snap.data()?.data);
-		if (data?.id === id) return res.send('✅ Logged In Successfully.\nThere is no data here though.');
+router.get('/:user', async (req, res) => {
+	const user = req.params.user;
+	if (!user) return res.redirect(403, '/login');
+	const auth = authenticate(undefined, req.cookies);
+	if (!auth) {
+		console.log('Redirected to login.');
+		return res.redirect('/login');
 	}
-	console.log('Redirected to login.');
-	res.redirect(303, '/login');
+
+	const data = await db.collection('users').doc(user).get()
+		.then(snap => snap.data()?.data);
+	return res.render('userPage', { name: data.name, rank: data.rank });
 });
 
 module.exports = router;
