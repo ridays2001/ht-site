@@ -1,0 +1,21 @@
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		link(rel='shortcut icon', href='/imgs/icon2', type='image/x-icon')
+		link(rel="stylesheet", href="/css/notes.css")
+		title Notes - HT Online
+	body
+		h1=`Your Notes`
+		#notes
+			a#back(href='/users') ⬅ Back
+			ol
+				each val of notes
+					li
+						ul
+							li=`Date: ${val.date}`
+							li=`Subject: ${val.subject}`
+							li=`Chapter: ${val.chapter}`
+							li
+								a(href=val.link) Link↗
+							br
