@@ -115,6 +115,9 @@ app.get('/contact', (req, res) => {
 	else device = 'desktop';
 	res.render('contact', { view: device });
 });
+
+app.get('/tos', (_req, res) => res.redirect(301, '/terms'));
+app.get('/tnc', (_req, res) => res.redirect(301, '/terms'));
 app.get('/terms', (_req, res) => res.render('legal/terms'));
 app.get('/privacy', (_req, res) => res.render('legal/privacy'));
 app.get('/disclaimer', (_req, res) => res.render('legal/disclaimer'));
