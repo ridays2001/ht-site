@@ -11,7 +11,7 @@ exports.authenticate = async (loginData, cookieData) => {
 	if (savedUsername && savedID) {
 		const data = await db.collection('users').doc(savedUsername).get()
 			.then(snap => snap.data()?.data);
-		if (data?.id === savedID) return true;
+		if (data?.id?.includes(savedID)) return true;
 	}
 
 	// Check if the login credentials entered match with the database.
@@ -19,7 +19,8 @@ exports.authenticate = async (loginData, cookieData) => {
 		const data = await db.collection('users').doc(username).get()
 			.then(snap => snap.data()?.data);
 		if (data?.password === password) {
-			data.id = id;
+			if (!data?.id?.length) data.id = [];
+			data.id.push(id);
 			await db.collection('users').doc(username).set({ data }, { merge: true });
 			return true;
 		}
