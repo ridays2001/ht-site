@@ -27,7 +27,7 @@ app.use(session({
 	secret: process.env.SECRET,
 	cookie: {
 		sameSite: 'lax',
-		// secure: true,
+		secure: true,
 		httpOnly: true,
 		path: '/',
 		maxAge: 3600000
@@ -115,9 +115,9 @@ app.get('/contact', (req, res) => {
 	else device = 'desktop';
 	res.render('contact', { view: device });
 });
-app.get('/terms', (_req, res) => res.render('terms'));
-app.get('/privacy', (_req, res) => res.render('privacy'));
-app.get('/disclaimer', (_req, res) => res.render('disclaimer'));
+app.get('/terms', (_req, res) => res.render('legal/terms'));
+app.get('/privacy', (_req, res) => res.render('legal/privacy'));
+app.get('/disclaimer', (_req, res) => res.render('legal/disclaimer'));
 
 app.use((_req, res) => {
 	res.status(404).redirect('/');
