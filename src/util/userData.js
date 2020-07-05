@@ -72,6 +72,25 @@ exports.assignments = async user => {
 	return data;
 };
 
+exports.notes = async user => {
+	const { name } = await db.collection('users').doc(user).get()
+		.then(snap => snap.data()?.data);
+	const data = {
+		name,
+		notes: [],
+		user
+	};
+
+	const rawNotes = await db.collection('data').doc('notes').get()
+		.then(snap => snap.data()?.[user]);
+	data.notes = rawNotes.map(n => {
+		const date = moment(n.date?._seconds * 1000).format('Do MMM, dddd');
+		return { ...n, date };
+	}).reverse();
+
+	return data;
+};
+
 exports.attendance = async (user, m) => {
 	const { name } = await db.collection('users').doc(user).get()
 		.then(snap => snap.data()?.data);
@@ -102,22 +121,15 @@ exports.attendance = async (user, m) => {
 	return data;
 };
 
-exports.notes = async user => {
+exports.marks = async user => {
 	const { name } = await db.collection('users').doc(user).get()
 		.then(snap => snap.data()?.data);
 	const data = {
 		name,
-		notes: [],
-		user
+		link: undefined
 	};
-
-	const rawNotes = await db.collection('data').doc('notes').get()
-		.then(snap => snap.data()?.[user]);
-	data.notes = rawNotes.map(n => {
-		const date = moment(n.date?._seconds * 1000).format('Do MMM, dddd');
-		return { ...n, date };
-	}).reverse();
-
+	data.link = await db.collection('data').doc('marks').get()
+		.then(snap => snap.data()[user]);
 	return data;
 };
 
@@ -126,12 +138,9 @@ exports.syllabus = async user => {
 		.then(snap => snap.data()?.data);
 	const data = {
 		name,
-		syllabus: [],
-		user
+		link: undefined
 	};
-
-	data.syllabus = await db.collection('data').doc('syllabus').get()
-		.then(snap => snap.data()?.[user]);
-
+	data.link = await db.collection('data').doc('syllabus').get()
+		.then(snap => snap.data()?.[user]?.link);
 	return data;
 };
