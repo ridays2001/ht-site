@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        link(rel="shortcut icon", href="/imgs/icon2.png", type="image/x-icon")
+        title Assignments - HT Online
+        link(rel="stylesheet", href="/css/user-home.css")
+    body
+        h1=`Welcome ${name}.`
+
+        h2 Your assignments:
+            ol
+                each val in assignments
+                    ul
+                        li=`Assignment: ${val.desc}`
+                        li=`Subject: ${val.sub}`
+                        li=`Assigned on: ${val.date}`
+                        li=`Due by: ${val.due}`
+                        if (val.link)
+                            li
+                                a(href=val.link) Link↗
+                        br
+                else
+                    li No assignments. Enjoy! 🎊🎉
