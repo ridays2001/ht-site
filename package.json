@@ -33,6 +33,8 @@
     "express-session": "^1.17.1",
     "firestore-db": "^1.0.5",
     "http-errors": "^1.8.0",
+    "moment": "^2.27.0",
+    "moment-duration-format": "^2.3.2",
     "morgan": "^1.10.0",
     "node-fetch": "^2.6.0",
     "pug": "^3.0.0"
