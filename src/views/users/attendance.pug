@@ -1,0 +1,31 @@
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		link(rel="shortcut icon", href="/imgs/icon2.png", type="image/x-icon")
+		title Attendance - HT Online
+		link(rel="stylesheet", href="/css/attendance.css")
+	body
+		h1 Your Attendance
+		div#calender
+			a#back(href='/users') ⬅ Back
+			br
+			br
+			br
+			h2=`Attendance for the month of ${month}`
+			h3=`Total: ${(present / (present + absent)) * 100}%`
+			each val, index in days
+				.day
+					if(list[index] === 'p')
+						p.present.cal=index+1
+					else if(list[index] === 'a')
+						p.absent.cal=index+1
+					else if(list[index] === 'h')
+						p.holiday.cal=index+1
+					else
+						p.cal=index+1
+			br
+			.key
+				p.present.key Present
+				p.absent.key Absent
+				p.holiday.key Holiday
