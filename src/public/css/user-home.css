@@ -1,0 +1,31 @@
+/* Import font library. */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap');
+
+html {
+	text-align: center;
+    background-color: #351e10;
+    color: #ffffff;
+	font-family: 'Merriweather', serif;
+	background-image: url('/imgs/books.png');
+	background-repeat: no-repeat;
+    background-size: cover;
+}
+
+a, a:visited {
+	color: #0018f9;
+	margin: 2% 5%;
+	font-size: 2em;
+}
+
+a:hover, a:focus {
+	color: #d30000;
+	border: solid 0.5px;
+}
+
+#nav {
+	margin: 0 auto;
+	background-color: rgba(255, 255, 255, 0.75);
+	padding: 5%;
+	width: 75%;
+	border-radius: 7vw;
+}
