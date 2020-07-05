@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const { firestore: db } = require('./util/db');
 const { authenticate } = require('./util/authenticate');
+const { userData, assignments, attendance, syllabus, notes } = require('./util/userData');
+const moment = require('moment');
+require('moment-duration-format');
 
 router.get('/', (req, res) => {
 	const auth = authenticate(undefined, req.cookies);
@@ -13,15 +16,29 @@ router.get('/', (req, res) => {
 router.get('/:user', async (req, res) => {
 	const user = req.params.user;
 	if (!user) return res.redirect(403, '/login');
-	const auth = authenticate(undefined, req.cookies);
+	const auth = await authenticate(undefined, req.cookies);
 	if (!auth) {
-		console.log('Redirected to login.');
+		console.log('Authentication failed. Redirected to login.');
 		return res.redirect('/login');
 	}
 
 	const data = await db.collection('users').doc(user).get()
 		.then(snap => snap.data()?.data);
-	return res.render('userPage', { name: data.name, rank: data.rank });
+
+	return res.render('users/user-home', {
+		name: data.name,
+		username: user
+	});
+});
+
+router.get('/:user/assignments', async (req, res) => {
+	const user = req.params.user;
+	return res.render('users/assignments', await userData(user));
+});
+
+router.get('/:user/attendance', async (req, res) => {
+	const user = req.params.user;
+	return res.render('users/attendance', await attendance(user));
 });
 
 module.exports = router;
