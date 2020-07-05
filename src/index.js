@@ -62,7 +62,7 @@ app.get('/login', async (req, res) => {
 		if (auth) return res.redirect(`/users/${req.cookies.username}`);
 		res.cookie('id', undefined, { maxAge: 100 });
 		res.cookie('username', undefined, { maxAge: 100 });
-		console.log('Cookies have deleted.');
+		console.log('Cookies have been deleted.');
 		return res.redirect('/login');
 	}
 	const viewport = req.headers['user-agent'].toLowerCase();
