@@ -1,54 +1,19 @@
 const { firestore: db } = require('./db');
 const moment = require('moment');
-const { raw } = require('express');
 
 exports.userData = async user => {
-	const { name } = await db.collection('users').doc(user).get()
+	const { name, timetable } = await db.collection('users').doc(user).get()
 		.then(snap => snap.data()?.data);
 	const data = {
-		assignments: [],
-		attendance: {
-			present: 0,
-			absent: 0,
-			holiday: 0,
-			list: [],
-			month: undefined,
-			days: 0
-		},
+		announcements: [],
+		study: [],
 		name,
-		notes: [],
-		syllabus: {},
-		user
+		user,
+		timetable
 	};
 
-	const rawAssignments = await db.collection('data').doc('assignments').get()
-		.then(snap => snap.data()?.[user]);
-	data.assignments = rawAssignments.map(a => {
-		const due = moment(a.due?._seconds * 1000).format('Do MMM, dddd');
-		const date = moment(a.date?._seconds * 1000).format('Do MMM, dddd');
-		return { ...a, due, date };
-	}).reverse();
-
-	const rawNotes = await db.collection('data').doc('notes').get()
-		.then(snap => snap.data()?.[user]);
-	data.notes = rawNotes.map(n => {
-		const date = moment(n.date?._seconds * 1000).format('Do MMM, dddd');
-		return { ...n, date };
-	}).reverse();
-
-	const rawAttendance = await db.collection('data').doc('attendance').get()
-		.then(snap => snap.data()?.[user]);
-	const month = moment(new Date().setMonth()).format('MMM').toLowerCase();
-	const list = rawAttendance[month];
-	data.attendance.present = list?.filter(a => a === 'p')?.length;
-	data.attendance.absent = list?.filter(a => a === 'a')?.length;
-	data.attendance.holiday = list?.filter(a => a === 'h')?.length;
-	data.attendance.list = list;
-	data.attendance.month = month;
-	data.attendance.days = new Array(moment().daysInMonth());
-
-	data.syllabus = await db.collection('data').doc('syllabus').get()
-		.then(snap => snap.data()?.[user]);
+	data.announcements = await db.collection('data').doc('announcements').get()
+		.then(snap => snap.data().data);
 
 	return data;
 };
