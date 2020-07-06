@@ -2,7 +2,7 @@ html(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="shortcut icon", href="../public/imgs/icon2.png", type="image/x-icon")
+        link(rel="shortcut icon", href="/imgs/icon2.png", type="image/x-icon")
         title Login - HT Online
         link(rel="stylesheet", href=`/css/${view}/login.css`)
     body
@@ -11,6 +11,7 @@ html(lang="en")
 
         div#login-area.col-3
             p#err=err
+            p#success=success
             form(action="/login", method="post", autocomplete="off")
                 label(for="username") Username &emsp;&emsp;
                 input.input(type="text", name="username" required)
