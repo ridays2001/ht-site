@@ -18,12 +18,7 @@ router.get('/:user', async (req, res) => {
 	const auth = await authenticate(undefined, req.cookies);
 	if (!auth) return res.redirect(403, '/login');
 
-	const data = await db.collection('users').doc(user).get()
-		.then(snap => snap.data()?.data);
-	return res.render('users/user-home', {
-		name: data.name,
-		username: user
-	});
+	return res.render('users/user-home', await userData(user));
 });
 
 router.get('/:user/assignments', async (req, res) => {
