@@ -25,6 +25,7 @@
     "nodemon": "^2.0.4"
   },
   "dependencies": {
+    "@google-cloud/connect-firestore": "^1.0.6",
     "cookie-parser": "^1.4.5",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
