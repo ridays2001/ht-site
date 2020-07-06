@@ -11,6 +11,9 @@ const http = require('http');
 const { listening: onListening } = require('./util/listening');
 const { err: onError } = require('./util/error');
 const { authenticate } = require('./util/authenticate');
+const { firestore: db } = require('./util/db');
+const { FirestoreStore } = require('@google-cloud/connect-firestore');
+const { Firestore } = require('@google-cloud/firestore');
 
 const express = require('express');
 const app = express();
@@ -34,7 +37,9 @@ app.use(session({
 	},
 	resave: false,
 	saveUninitialized: true,
-	store: new session.MemoryStore()
+	store: new FirestoreStore({
+		dataset: db
+	  })
 })); // Use sessions in the app.
 app.use(cookieParser(process.env.SECRET)); // Use cookies in the app.
 app.use(flash({ sessionKeyName: 'notifications' }));
@@ -71,7 +76,8 @@ app.get('/login', async (req, res) => {
 	else device = 'desktop';
 	res.render('login', {
 		view: device,
-		err: await req.consumeFlash('error')
+		err: await req.consumeFlash('error'),
+		success: await req.consumeFlash('success')
 	});
 });
 
@@ -105,6 +111,18 @@ app.post('/login', async (req, res) => {
 	if (req.cookies.username) res.cookie('username', undefined, { maxAge: 100 });
 	if (req.cookies.id) res.cookie('id', undefined, { maxAge: 100 });
 	await req.flash('error', '❌ Incorrect Login Credentials.');
+	return res.redirect('/login');
+});
+
+app.get('/logout', async (req, res) => {
+	const { username, id } = req.cookies;
+	if (username) res.cookie('username', undefined, { maxAge: 100 });
+	if (id) res.cookie('id', undefined, { maxAge: 100 });
+	const data = await db.collection('users').doc(username).get()
+		.then(snap => snap.data()?.data);
+	data.id.splice(data.id.indexOf(id), 1);
+	await db.collection('users').doc(username).set({ data }, { merge: true });
+	await req.flash('success', '✅ Logged out successfully.');
 	return res.redirect('/login');
 });
 
