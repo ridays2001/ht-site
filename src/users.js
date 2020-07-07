@@ -1,10 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { firestore: db } = require('./util/db');
 const { authenticate } = require('./util/authenticate');
 const { userData, assignments, attendance, syllabus, notes, marks } = require('./util/userData');
-const moment = require('moment');
-require('moment-duration-format');
 
 router.get('/', (req, res) => {
 	const auth = authenticate(undefined, req.cookies);
