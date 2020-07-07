@@ -57,6 +57,7 @@ a:hover, a:focus {
 	color: #000000;
 	text-align: center;
 	border-radius: 7vw;
+	padding: 2.5%;
 }
 
 li {
