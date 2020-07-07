@@ -1,3 +1,8 @@
+// Import dependencies.
+
+const debug = require('debug')('ht-site:server');
+const { wakeUp } = require('./wakeUp');
+
 exports.err = err => {
 	if (!err.syscall !== 'listen') throw err;
 
@@ -11,3 +16,9 @@ exports.err = err => {
 		return process.exit(1);
 	}
 };
+
+exports.listening = () => {
+	wakeUp();
+	debug(`Listening on port ${process.env.PORT ?? 8080}.`);
+};
+
