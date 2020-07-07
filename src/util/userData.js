@@ -13,14 +13,14 @@ exports.userData = async user => {
 	};
 
 	data.announcements = await db.collection('data').doc('announcements').get()
-		.then(snap => snap.data().data);
-
+		.then(snap => snap.data()[user]) ?? [];
 	return data;
 };
 
 exports.assignments = async user => {
 	const { name } = await db.collection('users').doc(user).get()
-		.then(snap => snap.data()?.data);
+		.then(snap => snap.data().data);
+	console.log(name);
 	const data = {
 		name,
 		assignments: [],
@@ -87,10 +87,7 @@ exports.attendance = async (user, m) => {
 };
 
 exports.marks = async user => {
-	const { name } = await db.collection('users').doc(user).get()
-		.then(snap => snap.data()?.data);
 	const data = {
-		name,
 		link: undefined
 	};
 	data.link = await db.collection('data').doc('marks').get()
@@ -99,13 +96,10 @@ exports.marks = async user => {
 };
 
 exports.syllabus = async user => {
-	const { name } = await db.collection('users').doc(user).get()
-		.then(snap => snap.data()?.data);
 	const data = {
-		name,
 		link: undefined
 	};
 	data.link = await db.collection('data').doc('syllabus').get()
-		.then(snap => snap.data()?.[user]?.link);
+		.then(snap => snap.data()[user]?.link);
 	return data;
 };
