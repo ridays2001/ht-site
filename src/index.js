@@ -8,12 +8,10 @@ const session = require('express-session');
 const { flash } = require('express-flash-message');
 const logger = require('morgan');
 const http = require('http');
-const { listening: onListening } = require('./util/listening');
-const { err: onError } = require('./util/error');
+const { FirestoreStore } = require('@google-cloud/connect-firestore');
 const { authenticate } = require('./util/authenticate');
 const { firestore: db } = require('./util/db');
-const { FirestoreStore } = require('@google-cloud/connect-firestore');
-const { Firestore } = require('@google-cloud/firestore');
+const { listening: onListening, err: onError } = require('./util/listeners');
 
 const express = require('express');
 const app = express();
