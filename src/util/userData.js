@@ -29,8 +29,8 @@ exports.assignments = async user => {
 	const rawAssignments = await db.collection('data').doc('assignments').get()
 		.then(snap => snap.data()?.[user]);
 	data.assignments = rawAssignments.map(a => {
-		const due = moment((a.due?._seconds * 1000) + 1.98e+7).format('Do MMM, dddd');
-		const date = moment((a.date?._seconds * 1000) + 1.98e+7).format('Do MMM, dddd');
+		const due = moment((a.due?._seconds * 1000) + 4.32e+7).format('Do MMM, dddd');
+		const date = moment((a.date?._seconds * 1000) + 4.32e+7).format('Do MMM, dddd');
 		return { ...a, due, date };
 	}).reverse();
 
@@ -49,7 +49,7 @@ exports.notes = async user => {
 	const rawNotes = await db.collection('data').doc('notes').get()
 		.then(snap => snap.data()?.[user]);
 	data.notes = rawNotes.map(n => {
-		const date = moment((n.date?._seconds * 1000) + 1.98e+7).format('Do MMM, dddd');
+		const date = moment((n.date?._seconds * 1000) + 4.32e+7).format('Do MMM, dddd');
 		return { ...n, date };
 	}).reverse();
 
