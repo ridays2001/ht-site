@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { authenticate } = require('./util/authenticate');
+const { authenticate } = require('../util/authenticate');
 const { userData, assignments, attendance, syllabus, notes, marks } = require('./util/userData');
 
 router.get('/', (req, res) => {
