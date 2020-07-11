@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "@google-cloud/connect-firestore": "^1.0.6",
+    "@sentry/node": "^5.19.1",
     "cookie-parser": "^1.4.5",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
