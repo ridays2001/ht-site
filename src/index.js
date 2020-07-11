@@ -88,8 +88,11 @@ app.use('/auth', require('./routers/auth'));
 
 // Error handling section.
 app.use(sentry.Handlers.errorHandler());
-app.use((_req, res) => {
+app.use((req, res) => {
+	// Redirect 404 errors to home page.
 	res.status(404).redirect('/');
+	// Pass the 404 error message to Sentry.
+	sentry.captureMessage(`Cannot find ${req.url} on the server.`);
 });
 
 // Error handler.
