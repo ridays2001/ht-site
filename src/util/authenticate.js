@@ -7,8 +7,6 @@ exports.authenticate = async (loginData, cookieData) => {
 	const password = loginData?.password;
 	const id = loginData?.id;
 
-	console.log(loginData);
-
 	// Check if the saved cookie matches the credentials in the database.
 	if (savedUsername && savedID) {
 		const data = await db.collection('users').doc(savedUsername).get()
