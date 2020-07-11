@@ -13,7 +13,7 @@ router.get('/login', async (req, res) => {
 		res.cookie('id', undefined, { maxAge: 100 });
 		res.cookie('username', undefined, { maxAge: 100 });
 		console.log('[AUTH FAILED] Cookies have been deleted.');
-		return res.redirect('/login');
+		return res.redirect('/auth/login');
 	}
 	const viewport = req.headers['user-agent'].toLowerCase();
 	let device = undefined;
@@ -29,7 +29,7 @@ router.get('/login', async (req, res) => {
 router.post('/login', async (req, res) => {
 	const auth = await authenticate({
 		username: req.body.username,
-		password: req.body.password,
+		password: req.body.pass,
 		id: req.session.id
 	}, undefined);
 
@@ -55,7 +55,7 @@ router.post('/login', async (req, res) => {
 	if (req.cookies.id) res.cookie('id', undefined, { maxAge: 100 });
 
 	await req.flash('error', '❌ Incorrect Login Credentials.');
-	return res.redirect('/login');
+	return res.redirect('/auth/login');
 });
 
 router.get('/logout', async (req, res) => {
@@ -67,7 +67,7 @@ router.get('/logout', async (req, res) => {
 	data.id.splice(data.id.indexOf(id), 1);
 	await db.collection('users').doc(username).set({ data }, { merge: true });
 	await req.flash('success', '✅ Logged out successfully.');
-	return res.redirect('/login');
+	return res.redirect('/auth/login');
 });
 
 module.exports = router;
