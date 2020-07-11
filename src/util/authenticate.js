@@ -7,6 +7,8 @@ exports.authenticate = async (loginData, cookieData) => {
 	const password = loginData?.password;
 	const id = loginData?.id;
 
+	console.log(loginData);
+
 	// Check if the saved cookie matches the credentials in the database.
 	if (savedUsername && savedID) {
 		const data = await db.collection('users').doc(savedUsername).get()
@@ -26,7 +28,7 @@ exports.authenticate = async (loginData, cookieData) => {
 		}
 	}
 
-	console.log('Authentication failed. Redirecting back to login...');
+	console.log('[AUTH FAILED] Redirecting back to login...');
 	// Returns false in case of a failed authentication.
 	return false;
 };
