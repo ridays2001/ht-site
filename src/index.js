@@ -20,7 +20,7 @@ const { listening: onListening, err: onError } = require('./util/listeners');
 const express = require('express');
 const app = express();
 
-sentry.init({ dsn: process.env.SENTRY });
+sentry.init({ dsn: process.env.SENTRY, environment: process.env.HOST });
 
 app.set('port', process.env.PORT ?? 80); // Use port 80 for hosting.
 
