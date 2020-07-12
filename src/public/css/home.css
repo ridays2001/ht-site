@@ -10,7 +10,7 @@ body {
 	background-color: #351e10;
 	color: #ffffff;
 	font-family: 'Merriweather', Helvetica;
-	background: url('/imgs/books.png') no-repeat fixed;
+	background: url('/imgs/books.png') no-repeat center center fixed;
 	background-size: cover;
 	overflow: scroll;
 }
