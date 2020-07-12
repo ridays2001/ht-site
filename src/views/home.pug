@@ -3,6 +3,8 @@ html(lang='en')
 	head
 		meta(charset='UTF-8')
 		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		meta(name='theme-color', content='#351e10')
+		link(rel='shortcut icon', href='/imgs/icon2.png', type='image/x-icon')
 		title Home - HT Online
 
 		// CSS Files.
@@ -52,10 +54,10 @@ html(lang='en')
 
 			#content
 				nav
-					.container-fluid#a
-						button#sidebarCollapse.btn.btn-info(type='button')
+					.container-fluid#toggleBox
+						button#sidebarCollapse.btn.btn-primary.btn-lg(type='button')
 							i.fas.fa-align-left
-							span &nbsp; Toggle Sidebar
+							span &nbsp; Navigate
 
 				section#main.container.mx-auto
 					img.col-md-6(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
@@ -122,6 +124,11 @@ html(lang='en')
 			src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js',
 			integrity='sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm',
 			crossorigin='anonymous'
+		)
+
+		// jQuery custom scrollbar
+		script(
+			src='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js'
 		)
 
 		script.

@@ -10,8 +10,7 @@ body {
 	background-color: #351e10;
 	color: #ffffff;
 	font-family: 'Merriweather', Helvetica;
-	background-image: url('/imgs/books.png');
-	background-repeat: no-repeat;
+	background: url('/imgs/books.png') no-repeat fixed;
 	background-size: cover;
 	overflow: scroll;
 }
@@ -124,8 +123,8 @@ nav a, nav a:hover, nav a:focus {
     left: -250px;
     height: 100vh;
     z-index: 999;
-    background: #7386D5;
-    color: #fff;
+    background: rgba(255, 255, 255, 0.75);
+    color: #000000;
     transition: all 0.3s;
     overflow-y: scroll;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
@@ -140,7 +139,7 @@ nav a, nav a:hover, nav a:focus {
     height: 35px;
     line-height: 35px;
     text-align: center;
-    background: #7386D5;
+    background: rgba(255, 255, 255, 0.75);
     position: absolute;
     top: 10px;
     right: 10px;
@@ -151,8 +150,8 @@ nav a, nav a:hover, nav a:focus {
 }
 
 #dismiss:hover {
-    background: #fff;
-    color: #7386D5;
+    background: #351e10;
+    color: #ffffff;
 }
 
 .overlay {
@@ -171,8 +170,8 @@ nav a, nav a:hover, nav a:focus {
 }
 
 #sidebar .sidebar-header {
-    padding: 20px;
-    background: #6d7fcc;
+	padding: 20px;
+	border-bottom: solid 2px #351e10;
 }
 
 #sidebar ul.components {
@@ -187,14 +186,14 @@ nav a, nav a:hover, nav a:focus {
 }
 
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+    color: #ffffff;
+    background: #351e10;
 }
 
 #sidebar ul li.active>a,
 a[aria-expanded="true"] {
-    color: #fff;
-    background: #6d7fcc;
+    color: #ffffff;
+    background: #351e10;
 }
 
 a[data-toggle="collapse"] {
@@ -204,7 +203,7 @@ a[data-toggle="collapse"] {
 ul ul a {
     font-size: 0.9em !important;
     padding-left: 30px !important;
-    background: #6d7fcc;
+    background: rgba(255, 255, 255, 0.75);
 }
 
 #content {
@@ -216,8 +215,8 @@ ul ul a {
     right: 0;
 }
 
-#a {
-	padding-left: 3em;
-	padding-top: 3em;
+#toggleBox {
+	padding-top: 1em;
 	margin-bottom: -4em;
 }
+
