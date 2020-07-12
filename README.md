@@ -76,7 +76,6 @@ To run this site locally, follow these rules:
 + Minimize the terminal and open your browser to [localhost↗](http://localhost/)
 + If you followed the steps correctly, you should see the site homepage.
 
-
 ### Contribute:
 If you feel like you can change something to a better version, even if it is a comment to explain a function better, feel free to submit a pull request.
 + Edit the code from the forked repository.
@@ -85,7 +84,9 @@ If you feel like you can change something to a better version, even if it is a c
 + Submit it!
 
 Thank you for contributing. 💙
+<br/>
 
+&copy; 2020 Riday.
 
 [1]:https://nodejs.org/en "Node.js official site."
 [2]:https://console.firebase.google.com/ "Google firebase console."
