@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+html(lang='en')
+	head
+		meta(charset='UTF-8')
+		meta(name='viewport', content='width=device-width, initial-scale=1.0')
+		title Home - HT Online
+
+		// CSS Files.
+		link(
+			rel='stylesheet',
+			href='https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css',
+			integrity='sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk',
+			crossorigin='anonymous'
+		)
+		link(
+			rel='stylesheet',
+			href='https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css'
+		)
+		link(rel='stylesheet', href='/css/home.css')
+
+		// JS Files.
+		script(
+			defer,
+			src='https://use.fontawesome.com/releases/v5.0.13/js/solid.js',
+			integrity='sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ',
+			crossorigin='anonymous'
+		)
+		script(
+			defer,
+			src='https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js',
+			integrity='sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY',
+			crossorigin='anonymous'
+		)
+	body
+		.wrapper
+			nav#sidebar
+				#dismiss
+					i.fas.fa-arrow-left
+
+				.sidebar-header
+					h3 HT Online
+
+				ul.list-unstyled.components
+					li.active
+						a(href='#') Home
+					li
+						a(href='/contact') Contact
+					li
+						a(href='/gallery') Gallery
+					li
+						a(href='/') User Home / Login
+
+			#content
+				nav
+					.container-fluid#a
+						button#sidebarCollapse.btn.btn-info(type='button')
+							i.fas.fa-align-left
+							span &nbsp; Toggle Sidebar
+
+				section#main.container.mx-auto
+					img.col-md-6(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+					p.mx-auto.my-4 Not just <em>‘teaching’</em>, but also <u><em>inspiring</em></u>.
+					.row
+						a.col-8.col-md-4.mx-auto.my-4(href='/login') Login
+					a(href='#quotes')
+						.arrow.bounce
+
+				#divide
+
+				section#quotes.container
+					.row
+						div.quote.col-md-5.mx-auto
+							p “The ones who are crazy enough to think that they can change the world, are the ones who do it.”
+							p - Steve Jobs
+						div.quote.col-md-5.mx-auto
+							p “Education is what remains after one has forgotten what one has learned in school.”
+							p - Albert Einstein
+					.row
+						div.quote.col-md-8.mx-auto
+							p “Education is the most powerful weapon which you can use to change the world.”
+							p - Nelson Mandella
+					.row
+						div.quote.col-md-5.mx-auto
+							p “An investment in knowledge pays the best interest.”
+							p - Benjamin Franklin
+						div.quote.col-md-5.mx-auto
+							p “A well-educated mind will always have more questions than answers.”
+							p - Helen Keller
+
+				footer
+					.row.justify-content-between
+						.col-md-4
+							h4.mx-1 Legal
+							p <a href='/terms'>Terms &amp; Conditions↗</a>
+							p <a href='/privacy'>Privacy Policy↗</a>
+							p <a href='/disclaimer'>Disclaimer↗</a>
+						.center.col-md-4
+							a(href='https://github.com/ridays2001/ht-site')
+								img.col-md-8(src='https://i.imgur.com/CMRYukV.png', alt='GitHub')
+							br
+							br
+							p &copy; 2020 Himaani Shah Tutorials.
+
+		.overlay
+
+		// jQuery
+		script(
+			src='https://code.jquery.com/jquery-3.3.1.slim.min.js',
+			integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo',
+			crossorigin='anonymous'
+		)
+
+		// Popper.js
+		script(
+			src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js',
+			integrity='sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ',
+			crossorigin='anonymous'
+		)
+
+		// Bootstrap JS
+		script(
+			src='https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js',
+			integrity='sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm',
+			crossorigin='anonymous'
+		)
+
+		script.
+			$(document).ready(function () {
+				$('#sidebar').mCustomScrollbar({
+					theme: 'minimal'
+				});
+
+				$('#dismiss, .overlay').on('click', function () {
+					$('#sidebar').removeClass('active');
+					$('.overlay').removeClass('active');
+				});
+
+				$('#sidebarCollapse').on('click', function () {
+					$('#sidebar').addClass('active');
+					$('.overlay').addClass('active');
+					$('.collapse.in').toggleClass('in');
+					$('a[aria-expanded=true]').attr('aria-expanded', 'false');
+				});
+			});
