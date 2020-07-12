@@ -13,6 +13,7 @@ body {
 	background: url('/imgs/books.png') no-repeat center center fixed;
 	background-size: cover;
 	overflow: scroll;
+	height: 100vh;
 }
 
 #main {
