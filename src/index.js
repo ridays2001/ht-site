@@ -51,8 +51,15 @@ app.use(session({
 })); // Use sessions in the app.
 app.use(cookieParser(process.env.SECRET)); // Use cookies in the app.
 app.use(flash({ sessionKeyName: 'notifications' })); // Use flash messages.
+app.set('trust proxy', true);
 
 // Handle defined routes.
+app.get('/*', async (req, _res, next) => {
+	console.log(req.connection.remoteAddress);
+	console.log(req.ip);
+	return next();
+});
+
 app.get('/', async (req, res) => {
 	let loginButton = undefined;
 	const auth = await authenticate(undefined, req.cookies);
@@ -92,7 +99,7 @@ app.use((req, res) => {
 	// Redirect 404 errors to home page.
 	res.status(404).redirect('/');
 	// Pass the 404 error message to Sentry.
-	sentry.captureMessage(`Cannot find ${req.url} on the server.`);
+	sentry.captureMessage(`[404] @ ${req.url}`);
 });
 
 // Error handler.
