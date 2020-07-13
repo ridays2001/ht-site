@@ -54,11 +54,7 @@ app.use(flash({ sessionKeyName: 'notifications' })); // Use flash messages.
 app.set('trust proxy', true);
 
 // Handle defined routes.
-app.get('/*', async (req, _res, next) => {
-	console.log(req.connection.remoteAddress);
-	console.log(req.ip);
-	return next();
-});
+app.get('/*', async (req, _res, next) => next());
 
 app.get('/', async (req, res) => {
 	let loginButton = undefined;
