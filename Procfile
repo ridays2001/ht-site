@@ -1,1 +1,1 @@
-web: node src/index.js
+web: node --no-warnings src/index.js
