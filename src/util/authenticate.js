@@ -26,7 +26,7 @@ exports.authenticate = async (loginData, cookieData) => {
 		}
 	}
 
-	console.log('[AUTH FAILED] Redirecting back to login...');
+	console.log('[AUTH FAILED]');
 	// Returns false in case of a failed authentication.
 	return false;
 };
