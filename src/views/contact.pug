@@ -1,41 +1,133 @@
-html(lang='en')
-	head
-		meta(charset='UTF-8')
-		meta(name='viewport', content='width=device-width, initial-scale=1.0')
-		link(rel='shortcut icon', href='/imgs/icon2.png', type='image/x-icon')
-		title Contact Us - HT Online
-		link(rel='stylesheet', href=`/css/${view}/contact.css`)
-	body
-		div#main
-			div#study
-				h2 <u>🔽 Study-Related Queries 🔽</u>
-				p For all study-related queries, contact:<br>
-				| Himaani Shah<br>
-				div.btn
-					<a href='mailto:himaani96@gmail.com'><img class='btn' src='https://i.imgur.com/MzGWEbD.png' alt='Email'> himaani96@gmail.com</a>
+extends templates/base
+
+block title
+	title Contact Us - HT Online
+
+append css
+	link(rel='stylesheet', href='/css/contact.css')
+
+block page
+	#header.text-center
+		img.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+	#details.container
+		.row.justify-content-around.text-center
+			#study.col-md-5.block
+				h2.
+					<i class='fas fa-book' aria-hidden=true></i>
+					Content Queries
 				br
-				div.btn
-					<a href='https://wa.me/919820093845'><img class='btn' src='https://i.imgur.com/goT69cA.png' alt='WhatsApp'> +91 98200 93845</a>
+				p.
+					For all study-related queries, contact:
+					<br> Himaani Shah
+				a(href='mailto:himaani96@gmail.com')
+					button.btn.btn-primary.col-md-6(type='button')
+						i.far.fa-envelope(aria-hidden=true)
+						span#hs &nbsp; Email
+				<br><br>
+				a(href='https://wa.me/919820093845')
+					button.btn.btn-primary.col-md-6(type='button')
+						i.fab.fa-whatsapp(aria-hidden=true)
+						span &nbsp; +91 98200 93845
 
-			br
-			br
-
-			div#site
-				h2 <u>🔽 Website-Related Queries 🔽</u>
-				p For all technical queries, contact:<br>
-				| Riday Shah<br>
-				div.btn
-					<a href='mailto:ridayshah2001@gmail.com'><img class='btn' src='https://i.imgur.com/MzGWEbD.png' alt='Email'> ridayshah2001@gmail.com</a>
+			#technical.col-md-5.block
+				h2.
+					<i class="fas fa-desktop"></i>
+					Technical Queries
 				br
-				div.btn
-					<img class='btn-2' src='https://discord.com/assets/e05ead6e6ebc08df9291738d0aa6986d.png' alt='Discord'> Riday 💙#7468
+				p.
+					For all website-related queries, contact:
+					<br> Riday Shah
+				a(href='mailto:ridayshah2001@gmail.com')
+					button.btn.btn-primary.col-md-6(type='button')
+						i.far.fa-envelope(aria-hidden=true)
+						span#rs &nbsp; Email
+				<br><br>
+				a(href='https://discord.io/riday')
+					button.btn.btn-primary.col-md-6(type='button')
+						i.fab.fa-discord(aria-hidden=true)
+						span &nbsp; Riday 💙#7468
 
-			br
-			br
+		.row
+			#form.block.mx-auto
+				h2.text-center Contact Form
+				form(action='/contact2', method='post')
+					.form-row.form-group
+						label(for='name') Name:*
+						.input-group
+							.input-group-prepend
+								.input-group-text
+									i.far.fa-user-circle(aria-hidden=true)
+							input.form-control(
+								type='text',
+								placeholder='Full Name',
+								name='name',
+								required
+							)
+					br
+					.form-row.form-group
+						p.col-12 At least one contact method is required.*
+						br
+						label(for='email') Email:
+						.input-group
+							.input-group-prepend
+								.input-group-text @
+							input.form-control#email(
+								type='email',
+								placeholder='someone@example.com',
+								name='email'
+							)
+						label(for='phone') Phone Number:
+						.input-group
+							.input-group-prepend
+								.input-group-text
+									i.fas.fa-phone-alt(aria-hidden=true)
+							input.form-control#phone(
+								type='tel',
+								name='phone',
+								placeholder='+91 98200 93845'
+							)
+					.form-row.form-group
+						p Purpose of contact:*&emsp;
+						.custom-control.custom-radio
+							input#edu.custom-control-input(
+								type='radio',
+								name='purpose',
+								value='Education',
+								required
+							)
+							label.custom-control-label(for='edu')
+								i.fas.fa-book(aria-hidden=true)
+								span Education related.&emsp;
+						.custom-control.custom-radio
+							input#site.custom-control-input(
+								type='radio',
+								name='purpose',
+								value='Website'
+							)
+							label.custom-control-label(for='site')
+								i.fas.fa-book(aria-hidden=true)
+								span Website related.
+					.form-row.form-group
+						label(for='message') Message*
+						textarea#message.form-control(
+							name='message',
+							rows='2',
+							placeholder='How can we help you?',
+							required
+						)
+					.form-row.form-group
+						button.btn.btn-primary.mx-auto.col-8.col-md-3(type='submit') Submit
 
-			div#code
-				h2 <u>🔽 Source Code 🔽</u>
-				p The source code of this site can be found on <a href='https://github.com/ridays2001/ht-site'>GitHub↗</a>.<br>
-				a(href='https://github.com/ridays2001/ht-site')
-					img#gh(src='https://i.imgur.com/6COtOVL.png', alt='@ridays2001')
-			
+block script-2
+	script.
+		$(form).on('submit', () => {
+			if ($('#phone').val() === '' && $('#email').val() === '') {
+				alert('Please enter either your email or your phone number!');
+				return false;
+			}
+			if ($('#phone').val() && !$('#phone').val().match(/^[+]*[(]{0,1}[0-9]{1,4}[)]{0,1}[-\s\./0-9]*$/g)) {
+				alert('Please enter a valid phone number!');
+				return false;
+			}
+			return true;
+		});
