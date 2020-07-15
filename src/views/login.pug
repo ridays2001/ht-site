@@ -1,22 +1,41 @@
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="shortcut icon", href="/imgs/icon2.png", type="image/x-icon")
-        title Login - HT Online
-        link(rel="stylesheet", href=`/css/${view}/login.css`)
-    body
-        a(href="/")
-            img(src="/imgs/logo-white.png", alt="Himaani Shah Tutorials")
+extends templates/base
 
-        div#login-area.col-3
-            p#err=err
-            p#success=success
-            form(action="/auth/login", method="post", autocomplete="off")
-                label(for="username") Username &emsp;&emsp;
-                input.input(type="text", name="username" required)
-                br
-                label(for="pass") Password &emsp;&emsp;
-                input.input(type="password", name="pass" required)
-                br
-                input#btn(type="submit", value="Log In")
+block title
+	title Login - HT Online
+
+append css
+	link(rel='stylesheet', href='/css/login.css')
+
+block page
+	#header.text-center
+		img.col-11.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+
+	.container
+		.row
+			#main.container.text-center.col-md-6.block
+				h2 <i class="fas fa-sign-in-alt"></i> Log In
+				if (err.length > 0)
+					br
+					p#err=err
+				if (success.length > 0)
+					br
+					p#success=success
+				br
+				#form.block.mx-auto
+					form(action='/auth/login/', method='post')
+						.form-group.row.justify-content-center
+							label.col-3.col-form-label(for='username') Username
+							.input-group.col-8.col-md-6
+								.input-group-prepend
+									.input-group-text
+										i.far.fa-user(aria-hidden=true)
+								input.form-control(type='text', name='username', required)
+						.form-group.row.justify-content-center
+							label.col-3.col-form-label(for='pass') Password
+							.input-group.col-8.col-md-6
+								.input-group-prepend
+									.input-group-text
+										i.fas.fa-unlock(aria-hidden=true)
+								input.form-control(type='password', name='pass', required)
+						button.btn.btn-primary.mx-auto.col-8.col-md-2(type='submit') Log in
+
