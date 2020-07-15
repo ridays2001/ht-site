@@ -1,0 +1,42 @@
+/* Import general css rules. */
+@import url('/css/templates/main.css');
+
+#main {
+	margin-top: 4em;
+	color: #000000;
+	background-color: rgba(255, 255, 255, 0.75);
+	border-radius: 7vw;
+	padding: 2em 0;
+}
+
+#err {
+    color: #f51b00;
+    font-size: 1.2em;
+}
+
+#success {
+    color: #0069d9;
+    font-size: 1.2em;
+}
+
+/* Customizations for < md view. */
+@media screen and (max-width: 767px) {
+	.row {
+		margin-bottom: 2.5em;
+	}
+
+	#header {
+		margin-top: 6.5em;
+	}
+
+	.block {
+		margin-left: 2em;
+	}
+}
+
+/* Customizations for the > md view */
+@media screen and (min-width: 768px) {
+	.row {
+		margin-bottom: 3em;
+	}
+}
