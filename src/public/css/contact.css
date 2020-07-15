@@ -1,0 +1,52 @@
+/* Import general css rules. */
+@import url('/css/templates/main.css');
+
+/* CSS rules for contact page. */
+
+#details {
+	margin-top: 4em;
+}
+
+.block {
+	background-color: rgba(255, 255, 255, 0.75);
+	color: #000000;
+	padding: 3em 2em;
+	border-radius: 7vw;
+}
+
+.row {
+	margin: 0 0.25em;
+}
+
+.form-control::placeholder {
+	color: #0000ff;
+	opacity: 0.6;
+}
+
+/* Customizations for < md view */
+@media screen and (max-width: 767px) {
+	input {
+		margin-bottom: 1.5em;
+	}
+
+	#header {
+		margin-top: 5em;
+		margin-bottom: -2.5em;
+	}
+
+	.block {
+		margin: 1.5em 0;
+	}
+}
+
+/* Customizations for the > md view */
+@media screen and (min-width: 768px) {
+	#form {
+		margin: 3em auto !important;
+		padding: 3em 5em;
+	}
+
+	.row {
+		margin: 0 -10vw !important;
+	}
+}
