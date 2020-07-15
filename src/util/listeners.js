@@ -1,6 +1,4 @@
 // Import dependencies.
-
-const debug = require('debug')('ht-site:server');
 const { wakeUp } = require('./wakeUp');
 
 exports.err = err => {
@@ -19,6 +17,6 @@ exports.err = err => {
 
 exports.listening = () => {
 	wakeUp();
-	debug(`Listening on port ${process.env.PORT ?? 8080}.`);
+	console.log(`Listening on port ${process.env.PORT ?? 8080}.`);
 };
 
