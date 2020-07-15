@@ -20,13 +20,15 @@
   },
   "homepage": "https://github.com/ridays2001/ht-site#readme",
   "devDependencies": {
-    "eslint": "^7.3.1",
+    "eslint": "^7.4.0",
     "eslint-config-aqua": "^7.2.4",
     "nodemon": "^2.0.4"
   },
   "dependencies": {
     "@google-cloud/connect-firestore": "^1.0.6",
-    "@sentry/node": "^5.19.1",
+    "@sentry/apm": "^5.19.2",
+    "@sentry/node": "^5.19.2",
+    "compression": "^1.7.4",
     "cookie-parser": "^1.4.5",
     "debug": "^4.1.1",
     "dotenv": "^8.2.0",
@@ -34,6 +36,7 @@
     "express-flash-message": "^1.0.6",
     "express-session": "^1.17.1",
     "firestore-db": "^1.0.5",
+    "helmet": "^3.23.3",
     "http-errors": "^1.8.0",
     "moment": "^2.27.0",
     "moment-duration-format": "^2.3.2",
