@@ -1,7 +1,10 @@
-const express = require('express');
-const router = express.Router();
+
 const { authenticate } = require('../util/authenticate');
 const { firestore: db } = require('../util/db');
+const { navData } = require('../util/navData');
+
+const express = require('express');
+const router = express.Router();
 
 router.get('/login', async (req, res) => {
 	// Check if the user already has a saved login on their device.
@@ -15,12 +18,12 @@ router.get('/login', async (req, res) => {
 		console.log('[AUTH FAILED] Cookies have been deleted.');
 		return res.redirect('/auth/login');
 	}
-	const viewport = req.headers['user-agent'].toLowerCase();
-	let device = undefined;
-	if (viewport.includes('android') || viewport.includes('iphone') || viewport.includes('ipad')) device = 'mobile';
-	else device = 'desktop';
-	res.render('login', {
-		view: device,
+
+	// Render the login page.
+	const data = await navData(req.cookies);
+	return res.render('login', {
+		login: true,
+		...data,
 		err: await req.consumeFlash('error'),
 		success: await req.consumeFlash('success')
 	});
