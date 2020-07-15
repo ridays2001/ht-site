@@ -1,0 +1,18 @@
+/* Import font library. */
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:ital@1&display=swap');
+
+/* Import css rules for navbar. */
+@import url('/css/templates/nav.css');
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background-color: #351e10;
+	color: #ffffff;
+	font-family: 'Merriweather', Helvetica;
+	background: url('/imgs/books.png') no-repeat center center fixed;
+	background-size: cover;
+	overflow: scroll;
+}
