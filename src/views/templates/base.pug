@@ -1,0 +1,31 @@
+html(lang="en")
+	head
+		meta(charset="UTF-8")
+		meta(name="viewport", content="width=device-width, initial-scale=1.0")
+		meta(name='theme-color', content='#351e10')
+		link(rel="shortcut icon", href='/imgs/icon2.png', type="image/x-icon")
+
+		block title
+			title HT Online
+
+		block css
+			include css
+
+		block scripts-head
+			include scripts-head
+	body
+		block wrapper
+			.wrapper
+				include sidebar
+
+				block content
+					#content
+						include nav
+
+						block page
+
+		.overlay
+
+		include scripts-body
+
+		block script-2
