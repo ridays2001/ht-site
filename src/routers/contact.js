@@ -2,16 +2,16 @@
 const fetch = require('node-fetch');
 
 // Import all modules.
+const sentry = require('../util/sentry');
 const { navData } = require('../util/navData');
 const { firestore: db } = require('../util/db');
-const sentry = require('../util/sentry');
 
 const express = require('express');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
 	const data = navData(req.cookies);
-	return res.render('contact', { contact: true, ...data });
+	return res.render('contact', { contactActive: true, ...data });
 });
 
 router.post('/', async (req, res) => {
@@ -29,6 +29,7 @@ router.post('/', async (req, res) => {
 	if (email) description += `\n**__Email__** - ${email}`;
 	if (phone) description += `\n**__Phone Number__** - ${phone}`;
 
+	// Send the contact form information to a discord webhook.
 	try {
 		await fetch(`${process.env.WB}`, {
 			method: 'POST',
