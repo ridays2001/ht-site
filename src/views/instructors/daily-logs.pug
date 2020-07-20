@@ -1,0 +1,77 @@
+extends ../templates/base
+
+//- Check diary.
+
+block title
+	title Daily Logs - HT Online
+
+append css
+	link(rel='stylesheet', href='/css/instructors/portal.css')
+
+block page
+	#header.text-center
+		img.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+
+	.container-fluid
+		.row.no-gutters
+			#form.block.mx-auto.text-center.col-md-8
+				h2.text-center Daily Logs
+				form(action=`/instructors/${user}/daily-logs`, method='post')
+					#logs
+						.form-row
+							h4.col-4.text-primary.count 1.
+						.log
+							.form-row.form-group
+								label.col-4 Subject:*
+								.input-group.col-8.col-md-6
+									.input-group-prepend
+										.input-group-text
+											i.fas.fa-school(aria-hidden=true)
+									input.form-control(type='text', name='subjects[]', required)
+							.form-row
+								label.col-4 Description:*
+								.input-group.col-8.col-md-6
+									.input-group-prepend
+										.input-group-text
+											i.fas.fa-book(aria-hidden=true)
+									input.form-control(type='text', name='desc[]', required)
+					.form-row.form-group
+						button#rem.btn.btn-danger.mx-auto(type='button')
+							i.fas.fa-minus
+							span &emsp;Remove
+						button#add.btn.btn-success.mx-auto(type='button')
+							i.fas.fa-plus
+							span &emsp;Another
+					.form-row.form-group
+						select.custom-select.col-8.mx-auto#student(name='student', required)
+							option(selected, value='undefined') Select student.
+							each s of students
+								option(value=s.username)=`➢ ${s.name}`
+					.form-row.form-group
+						button.btn.btn-primary.mx-auto.col-8.col-md-3(type='submit') Submit
+
+block script-2
+	script.
+		let counter = 1;
+		$('#add').click(() => {
+			$('#logs').append(`<div class='form-row count'><h4 class='col-4 text-primary'>${++counter}.</h4></div>`);
+			$('#logs').append(`<div class='log'>${$('.log')[0].innerHTML}</div>`);
+		});
+
+		$('#rem').click(() => {
+			if (--counter < 1) {
+				alert('You cannot remove the last one!');
+				counter++;
+				return false;
+			}
+			$('.log:last').remove();
+			$('.count:last').remove();
+		});
+
+		$('#form').on('submit', () => {
+			if ($('#student').val() === 'undefined') {
+				alert('Please select a student.');
+				return false;
+			}
+			return true;
+		});

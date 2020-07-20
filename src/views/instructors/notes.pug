@@ -1,0 +1,55 @@
+extends ../templates/base
+
+block title
+	title Notes - HT Online
+
+append css
+	link(rel='stylesheet', href='/css/instructors/portal.css')
+
+block page
+	#header.text-center
+		img.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+
+	.container-fluid
+		.row.no-gutters
+			#form.block.mx-auto.text-center.col-md-8
+				h2.text-center Send Notes
+				form(action=`/instructors/${user}/notes`, method='post')
+					.form-row.form-group
+						label.col-4(for='subject') Subject:*
+						.input-group.col-8.col-md-6
+							.input-group-prepend
+								.input-group-text
+									i.fas.fa-school(aria-hidden=true)
+							input.form-control(type='text', name='subject', required)
+					.form-row
+						label.col-4(for='chapter') Chapter:*
+						.input-group.col-8.col-md-6
+							.input-group-prepend
+								.input-group-text
+									i.fas.fa-book(aria-hidden=true)
+							input.form-control(type='text', name='chapter', required)
+					.form-row.form-group
+						label.col-4(for='link') Link:
+						.input-group.col-8.col-md-6
+							.input-group-prepend
+								.input-group-text
+									i.fas.fa-link(aria-hidden=true)
+							input.form-control(type='url', name='link',)
+					.form-row.form-group
+						select.custom-select.col-8.mx-auto#student(name='student', required)
+							option(selected, value='undefined') Select student.
+							each s of students
+								option(value=s.username)=`➢ ${s.name}`
+					.form-row.form-group
+						button.btn.btn-primary.mx-auto.col-8.col-md-3(type='submit') Submit
+
+block script-2
+	script.
+		$('#form').on('submit', () => {
+			if ($('#student').val() === 'undefined') {
+				alert('Please select a student.');
+				return false;
+			}
+			return true;
+		});
