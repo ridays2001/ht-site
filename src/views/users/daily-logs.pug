@@ -1,0 +1,28 @@
+extends ../templates/base
+
+block title
+	title Daily Logs - HT Online
+
+append css
+	link(rel='stylesheet', href='/css/users/portal.css')
+
+block page
+	#header.text-center
+		img.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+
+	.container
+		.block
+			h3.text-center Daily Logs:
+			br
+			if (data.length > 0)
+				ul
+					each d of data
+						li=`Date: ${d.date}`
+						ol
+							each l of d.logs
+								li
+									p <b>Subject:</b> #{l.subject}
+									p <b>Description:</b> #{l.desc}
+								br
+			else
+				h5.text-center No logs available! Contact Ma'am for more info.

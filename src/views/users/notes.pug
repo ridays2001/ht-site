@@ -1,21 +1,27 @@
-html(lang='en')
-	head
-		meta(charset='UTF-8')
-		meta(name='viewport', content='width=device-width, initial-scale=1.0')
-		link(rel='shortcut icon', href='/imgs/icon2.png', type='image/x-icon')
-		link(rel="stylesheet", href="/css/notes.css")
-		title Notes - HT Online
-	body
-		h1=`Your Notes`
-		#notes
-			a#back(href='/users') ⬅ Back
-			ol
-				each val of notes
-					li
-						ul
-							li=`Date: ${val.date}`
-							li=`Subject: ${val.subject}`
-							li=`Chapter: ${val.chapter}`
-							li
-								a(href=val.link) Link↗
+extends ../templates/base
+
+block title
+	title Notes - HT Online
+
+append css
+	link(rel='stylesheet', href='/css/users/portal.css')
+
+block page
+	#header.text-center
+		img.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+
+	.container
+		.block
+			h3.text-center Notes:
+			br
+			if (notes)
+				ol
+					each n of notes
+						li
+							p <b>Given on:</b> #{n.date}
+							p <b>Subject:</b> #{n.subject}
+							p <b>Chapter:</b> #{n.chapter}
+							p <a href=n.link>Link↗</a>
 							br
+			else
+				p No notes available. Make Your Own!

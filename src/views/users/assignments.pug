@@ -1,26 +1,29 @@
-<!DOCTYPE html>
-html(lang='en')
-	head
-		meta(charset='UTF-8')
-		meta(name='viewport', content='width=device-width, initial-scale=1.0')
-		link(rel='shortcut icon', href='/imgs/icon2.png', type='image/x-icon')
-		title Assignments - HT Online
-		link(rel='stylesheet', href='/css/user-home.css')
-	body
-		h1=`Your Assignments`
-		#main
-			a#back(href='/users') ⬅ Back
-			ol
-				each val in assignments
-					li
-						ul
-							li=`Assigned on: ${val.date}`
-							li=`Subject: ${val.sub}`
-							li=`Assignment: ${val.desc}`
-							li=`Due by: ${val.due}`
-							if (val.link)
-								li
-									a(href=val.link) Link↗
+extends ../templates/base
+
+block title
+	title Assignments - HT Online
+
+append css
+	link(rel='stylesheet', href='/css/users/portal.css')
+
+block page
+	#header.text-center
+		img.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+
+	.container
+		.block
+			h3.text-center Your Assignments:
+			br
+			if (assignments)
+				ol
+					each a of assignments
+						li
+							p <b>Assigned on:</b> #{a.date}
+							p <b>Subject:</b> #{a.sub}
+							p <b>Assignment:</b> #{a.desc}
+							p <b>Due by:</b> #{a.due}
+							if (a.link)
+								p <a href=a.link>Link↗</a>
 							br
-				else
-					li No assignments. Enjoy! 🎊🎉
+			else
+				p No assignments. Enjoy! 🎊🎉
