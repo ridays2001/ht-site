@@ -1,1 +1,1 @@
-web: node --no-warnings src/index.js
+web: npm start
