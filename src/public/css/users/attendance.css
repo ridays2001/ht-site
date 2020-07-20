@@ -1,0 +1,54 @@
+/* Import general CSS rules. */
+@import url('/css/templates/main.css');
+
+.block {
+	background-color: rgba(255, 255, 255, 0.75);
+	color: #000000;
+	font-size: 1.2em;
+	border-radius: 7vw;
+	padding-top: 1.5em;
+	padding-bottom: 1em;
+	margin-bottom: 5em;
+}
+
+td, th {
+	text-align: center;
+}
+
+td {
+	border-radius: 7vw;
+}
+
+table {
+	border-collapse: separate;
+	border-spacing: 0.25em;
+}
+
+#form {
+	margin-bottom: 2em;
+}
+
+#key {
+	margin-top: 2em;
+	margin-bottom: 1em;
+}
+
+/* Customizations for the < md view. */
+@media screen and (max-width: 767px) {
+	#header {
+		margin-top: 5.5em;
+		margin-bottom: 2em;
+	}
+}
+
+/* Customizations for the > md view. */
+@media screen and (min-width: 768px) {
+	.block {
+		margin-top: 3em;
+	}
+
+	table {
+		border-collapse: separate;
+		border-spacing: 5em 1em;
+	}
+}
