@@ -51,7 +51,7 @@ nav#sidebar(data-simplebar)
 				li(class= dailyActive ? 'active' : '')
 					a(href=`/instructors/${user}/daily-logs`) Daily Logs
 			li <a href='/auth/logout'>Logout</a>
-		if (!home)
+		if (!homeActive)
 			br
 			hr#section
 			p &emsp;&emsp;<i class="fas fa-balance-scale"></i> Legal Section
