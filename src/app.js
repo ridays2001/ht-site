@@ -2,10 +2,12 @@
 require('dotenv').config();
 
 // Import all dependencies.
+const http = require('http');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const { flash } = require('express-flash-message');
+const userAgent = require('express-useragent');
 const logger = require('morgan');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -13,8 +15,9 @@ const { FirestoreStore } = require('@google-cloud/connect-firestore');
 
 // Import all modules.
 const { firestore: db } = require('./util/db');
-const sentry = require('./util/sentry');
 const { navData } = require('./util/navData');
+const sentry = require('./util/sentry');
+const { listening: onListening, err: onError } = require('./util/listeners');
 
 // Initialize an express app.
 const express = require('express');
@@ -30,6 +33,7 @@ app.set('view engine', 'pug'); // Set view engine to pug.
 // Middleware section.
 app.use(sentry.Handlers.requestHandler()); // Use sentry.
 app.use(sentry.Handlers.tracingHandler()); // Use sentry.
+app.use(userAgent.express()); // Parse user agent to find out device names, etc.
 app.use(express.json()); // Parse incoming json requests.
 app.use(express.urlencoded({ extended: true })); // Parse the incoming requests to urlencoded payloads
 app.use(logger('dev')); // Use morgan logger to log http requests.
@@ -56,8 +60,13 @@ app.use(flash({ sessionKeyName: 'notifications' })); // Use flash messages.
 
 // Handle defined routes.
 app.get('/', async (req, res) => {
-	const data = await navData(req.cookies);
-	return res.render('home', { home: true, ...data });
+	const nav = await navData(req.cookies);
+	return res.render('home', { homeActive: true, ...nav });
+});
+
+app.get('/gallery', async (req, res) => {
+	const nav = await navData(req.cookies);
+	return res.render('gallery', { galleryActive: true, ...nav });
 });
 
 // Legal section.
@@ -71,6 +80,7 @@ app.get('/tnc', (_req, res) => res.redirect(301, '/terms'));
 
 // Use router modules.
 app.use('/users', require('./routers/users'));
+app.use('/instructors', require('./routers/instructors'));
 app.use('/auth', require('./routers/auth'));
 app.use('/contact', require('./routers/contact'));
 
@@ -98,4 +108,8 @@ app.use((err, req, res) => {
 	res.render('error', { error: err });
 });
 
-module.exports = app;
+// Node server section.
+const server = http.createServer(app);
+server.listen(process.env.PORT ?? 80);
+server.on('listening', onListening);
+server.on('error', onError);
