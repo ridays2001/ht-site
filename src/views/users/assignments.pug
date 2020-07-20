@@ -23,7 +23,7 @@ block page
 							p <b>Assignment:</b> #{a.desc}
 							p <b>Due by:</b> #{a.due}
 							if (a.link)
-								p <a href=a.link>Link↗</a>
+								a(href=a.link) Link↗
 							br
 			else
 				p No assignments. Enjoy! 🎊🎉
