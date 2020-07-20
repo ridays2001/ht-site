@@ -1,5 +1,5 @@
 
-const { authenticate } = require('../util/authenticate');
+const authenticate = require('../util/authenticate');
 const { firestore: db } = require('../util/db');
 const { navData } = require('../util/navData');
 
@@ -9,8 +9,11 @@ const router = express.Router();
 router.get('/login', async (req, res) => {
 	// Check if the user already has a saved login on their device.
 	if (req.cookies.id || req.cookies.username) {
-		const auth = await authenticate(undefined, req.cookies);
-		if (auth) return res.redirect(`/users/${req.cookies.username}`);
+		const { auth, rank } = await authenticate(undefined, req.cookies);
+		if (auth) {
+			if (rank < 1) return res.redirect(`/users/${req.cookies.username}`);
+			return res.redirect(`/instructors/${req.cookies.username}`);
+		}
 
 		// Delete cookies in case of a failed authentication.
 		res.cookie('id', undefined, { maxAge: 100 });
@@ -22,7 +25,7 @@ router.get('/login', async (req, res) => {
 	// Render the login page.
 	const data = await navData(req.cookies);
 	return res.render('login', {
-		login: true,
+		loginActive: true,
 		...data,
 		err: await req.consumeFlash('error'),
 		success: await req.consumeFlash('success')
@@ -30,7 +33,7 @@ router.get('/login', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-	const auth = await authenticate({
+	const { auth, rank } = await authenticate({
 		username: req.body.username,
 		password: req.body.pass,
 		id: req.session.id
@@ -50,7 +53,8 @@ router.post('/login', async (req, res) => {
 			secure: true
 		});
 		console.log('[AUTH SUCCESS] Cookies have been created. Redirecting to users page...');
-		return res.redirect(`/users/${req.body.username}`);
+		if (rank < 1) return res.redirect(`/users/${req.body.username}`);
+		return res.redirect(`/instructors/${req.body.username}`);
 	}
 
 	// Delete old cookies, if present.
