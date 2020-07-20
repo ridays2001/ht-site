@@ -1,0 +1,35 @@
+/* Import general CSS rules. */
+@import url('/css/templates/main.css');
+
+.block {
+	background-color: rgba(255, 255, 255, 0.75);
+	color: #000000;
+	padding: 2em 3em;
+	margin: 2em auto;
+	border-radius: 7vw;
+}
+
+.block li {
+	text-align: justify;
+	font-size: 1em;
+}
+
+/* Customizations for < md view. */
+@media screen and (max-width: 767px) {
+	#header {
+		margin-top: 5.5em;
+		margin-bottom: 3em;
+	}
+
+	.block {
+		padding: 1em;
+		padding-right: 2em;
+	}
+}
+
+/* Customizations for > md view. */
+@media screen and (min-width:768px) {
+	#header {
+		margin-bottom: 2.5em;
+	}
+}
