@@ -133,9 +133,11 @@ router.get('/:instructor/attendance', async (req, res) => {
 });
 
 router.post('/:instructor/attendance', async (req, res) => {
+	console.log(req.body);
 	const username = req.params.instructor;
 	const auth = await checkAuth(username, req, res);
 	if (!auth) return undefined;
+	res.redirect(`/instructor/${username}/attendance`);
 });
 
 // Daily logs section.

@@ -17,7 +17,7 @@ block page
 			if (data.length > 0)
 				ul
 					each d of data
-						li=`Date: ${d.date}`
+						li <u><b>Date:</b> #{d.date}</u>
 						ol
 							each l of d.logs
 								li

@@ -126,11 +126,12 @@ const attendanceDB = async (user, m) => {
 const students = async () => {
 	const users = await db.collection('data').doc('students').get()
 		.then(snap => snap.data().users);
-	const students = [];
-	for (const u of users) {
-		const data = await userDB(u);
-		students.push({ name: data.name, DOB: data.DOB, grade: data.grade, username: u });
-	}
+	const students = Promise.all(users.map(u => userDB(u).then(data => ({
+		name: data.name,
+		DOB: data.DOB,
+		grade: data.grade,
+		username: u
+	}))));
 	return students;
 };
 
@@ -144,7 +145,12 @@ module.exports = {
 			const currentMonth = moment.tz(new Date(), 'Asia/Kolkata').format('Do MMM, YYYY').split(' ')[1];
 			const dueMonth = a.due.split(' ')[1];
 			if (currentMonth === dueMonth) {
-				const due = Number(a.due.split('th')[0]);
+				let due = a.due.slice(0, 4);
+				if (due.includes('th')) due = Number(a.due.split('th')[0]);
+				else if (due.includes('st')) due = Number(a.due.split('st')[0]);
+				else if (due.includes('rd')) due = Number(a.due.split('rd')[0]);
+				else if (due.includes('nd')) due = Number(a.due.split('nd')[0]);
+
 				const current = Number(moment.tz(new Date(), 'Asia/Kolkata').format('Do').split('th')[0]);
 				if (current <= due) {
 					return data.submissions.push(a);
@@ -217,7 +223,24 @@ module.exports = {
 			return { err };
 		}
 
-		const data = { name, photo, timetable, DOB, students: await students() };
+		const currentMonth = Number(moment.tz(new Date(), 'Asia/Kolkata').format('M'));
+		const months = [
+			{
+				display: moment(currentMonth - 1, 'M').format('MMM YYYY'),
+				value: moment(currentMonth - 1, 'M').format('MMM').toLowerCase()
+			},
+			{
+				display: moment(currentMonth, 'M').format('MMM YYYY'),
+				value: moment(currentMonth, 'M').format('MMM').toLowerCase()
+			},
+			{
+				display: moment(currentMonth + 1, 'M').format('MMM YYYY'),
+				value: moment(currentMonth + 1, 'M').format('MMM').toLowerCase()
+			}
+		];
+		console.log(months);
+
+		const data = { name, photo, timetable, DOB, students: await students(), months };
 		return data;
 	}
 };
