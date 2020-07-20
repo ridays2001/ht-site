@@ -11,7 +11,13 @@ block page
 		img.col-md-6(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
 		p.mx-auto.my-4 Not just <em>‘teaching’</em>, but also <em>inspiring</em>.
 		.row
-			a.col-8.col-md-4.mx-auto.my-4(href='/auth/login') Login
+			if (user)
+				if (rank === 'Instructor' || rank === 'Admin')
+					a.col-8.col-md-4.mx-auto.my-4(href=`/instructors/${user}`) My Profile
+				else
+					a.col-8.col-md-4.mx-auto.my-4(href=`/users/${user}`) My Profile
+			else
+				a.col-8.col-md-4.mx-auto.my-4(href='/auth/login') Login
 		a(href='#quotes')
 			.arrow.bounce
 
