@@ -1,6 +1,6 @@
 const { firestore: db } = require('./db');
 
-exports.authenticate = async (loginData, cookieData) => {
+module.exports = async (loginData, cookieData) => {
 	const savedID = cookieData?.id;
 	const savedUsername = cookieData?.username;
 	const username = loginData?.username;
@@ -11,7 +11,7 @@ exports.authenticate = async (loginData, cookieData) => {
 	if (savedUsername && savedID) {
 		const data = await db.collection('users').doc(savedUsername).get()
 			.then(snap => snap.data()?.data);
-		if (data?.id?.includes(savedID)) return true;
+		if (data?.id?.includes(savedID)) return { auth: true, rank: data.rank };
 	}
 
 	// Check if the login credentials entered match with the database.
@@ -22,11 +22,11 @@ exports.authenticate = async (loginData, cookieData) => {
 			if (!data?.id?.length) data.id = [];
 			data.id.push(id);
 			await db.collection('users').doc(username).set({ data }, { merge: true });
-			return true;
+			return { auth: true, rank: data.rank };
 		}
 	}
 
 	console.log('[AUTH FAILED]');
 	// Returns false in case of a failed authentication.
-	return false;
+	return { auth: false, rank: undefined };
 };
