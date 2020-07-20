@@ -1,0 +1,43 @@
+extends ../templates/base
+
+block title
+	title Instructor - HT Online
+
+append css
+	link(rel='stylesheet', href='/css/instructors/profile.css')
+
+block page
+	#header.text-center
+		img.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+
+	.container-fluid
+		.row.justify-content-between.no-gutters.left
+			.col-md-5.d-flex.flex-column.left.h-100
+				section#instructor.col.block.h-100
+					#image
+						img.col-10.col-md-6(src=photo, alt='Profile Picture')
+					#details
+						p=name
+						p=`Date of Birth: ${DOB}`
+
+				section#students.block.col.h-100
+					h4.text-center <-- Manage Students -->
+					ul#manage
+						li
+							span &emsp;
+							a(href=`/instructors/${user}/announcements`) Announcements
+						li
+							span &emsp;
+							a(href=`/instructors/${user}/assignments`) Assignments
+						li
+							span &emsp;
+							a(href=`/instructors/${user}/notes`) Notes
+						li
+							span &emsp;
+							a(href=`/instructors/${user}/attendance`) Attendance
+
+			.col-md-5.d-flex.flex-column.h-100.right
+				section.block.col.h-100
+					img.col-11(src=timetable, alt='Time table.')
+
+
