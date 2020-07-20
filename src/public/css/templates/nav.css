@@ -14,8 +14,8 @@ nav a, nav a:hover, nav a:focus {
     z-index: 999;
     background: rgba(255, 255, 255, 0.75);
     color: #000000;
-    transition: all 0.3s;
-    overflow-y: scroll;
+	transition: all 0.3s;
+	overflow: auto;
     box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.2);
 }
 
@@ -113,7 +113,7 @@ ul ul a {
 	border-top: solid 1.5px #351e10;
 }
 
-li > a:hover::before {
+#sidebar li > a:hover::before {
 	content: '→';
 	margin-right: 1rem;
 	margin-left: 0.5rem;
