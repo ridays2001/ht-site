@@ -200,7 +200,7 @@ module.exports = {
 	},
 	marks: async user => {
 		const link = await db.collection('data').doc('marks').get()
-			.then(snap => snap.data()?.[user]?.link);
+			.then(snap => snap.data()?.[user]);
 		return link;
 	},
 	syllabus: async user => {
