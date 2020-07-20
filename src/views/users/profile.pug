@@ -1,0 +1,74 @@
+extends ../templates/base
+
+block title
+	title My Profile - HT Online
+
+append css
+	link(rel='stylesheet', href='/css/users/profile.css')
+
+block page
+	#header.text-center
+		img.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+
+	.container-fluid
+			.row.justify-content-between.no-gutters.left
+				.col-md-5.d-flex.flex-column
+					section#student.col.block.h-100
+						#image
+							img.col-10.col-md-6(src=photo, alt='Profile Picture')
+						#details
+							p=name
+							p=`Level ${grade}.`
+							p=`Date of Birth: ${DOB}`
+
+					section.block.col.h-100
+						img.col-11(src=timetable, alt='No time-table.')
+
+				.col-md-5.d-flex.flex-column.h-100.right
+					section#recent.container.block
+						if (birthday)
+							h3.text-center 🎉🎉Happy Birthday to You!! 🎉🎉
+							br
+						h4.text-center <-- Today -->
+						br
+						if (announcements.length > 0)
+							ul
+								each a of announcements
+									li=a.message
+									if (a.link)
+										li
+											a(href=a.link) Link↗
+									br
+						else
+							p No recent announcements.
+
+						br
+
+						h4.text-center <-- Submissions -->
+						br
+						if (submissions.length > 0)
+							ul
+								each s of submissions
+									li=`Assigned on: ${s.date}.`
+									li=`Subject: ${s.sub}.`
+									li=`Due by: ${s.due}.`
+									br
+						else
+							p No pending assignments.
+						a(href=`/users/${user}/assignments`) More↗
+
+						br
+						br
+
+						h3.text-center <-- Notes -->
+						br
+						if (newNotes.length > 0)
+							ul
+								each n of newNotes
+									li=`Date: ${n.date}.`
+									li=`Subject: ${n.subject}.`
+									li
+										a(href=n.link) Link↗
+									br
+						else
+							p No recent notes.
