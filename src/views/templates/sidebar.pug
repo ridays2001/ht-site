@@ -1,4 +1,4 @@
-nav#sidebar
+nav#sidebar(data-simplebar)
 	#dismiss(style='padding: 0.5em;')
 		i.fas.fa-arrow-left
 
@@ -6,41 +6,61 @@ nav#sidebar
 		h3 HT Online
 
 	ul.list-unstyled.components
-		li(class= home ? 'active' : '')
+		li(class= homeActive ? 'active' : '')
 			a(href='/') Home
-		li(class= contact ? 'active' : '')
+		li(class= contactActive ? 'active' : '')
 			a(href='/contact') Contact
-		li(class= gallery ? 'active' : '')
+		li(class= galleryActive ? 'active' : '')
 			a(href='/gallery') Gallery
 		if (!user)
-			li(class= login ? 'active' : '')
+			li(class= loginActive ? 'active' : '')
 				a(href='/auth/login') Login
 		else
 			br
 			hr#section
-			p &emsp;&emsp;<i class="fas fa-book-reader"></i> #{rank} Section
-			li(class= profile ? 'active' : '')
-				a(href=`/users/${user}`) My Profile
-			li(class= assignments ? 'active' : '')
-				a(href=`/users/${user}/assignments`) Assignments
-			li(class= notes ? 'active' : '')
-				a(href=`/users/${user}/notes`) Notes
-			li(class= att ? 'active' : '')
-				a(href=`/users/${user}/attendance`) Attendance
-			if (syllabusExists)
-				li(class= syllabus ? 'active' : '')
-					a(href=`/users/${user}/syllabus`) Syllabus
-			if (marksExists)
-				li(class= marks ? 'active' : '')
-					a(href=`/users/${user}/marks`) Marks
+			if (rank === 'Student')
+				p &emsp;&emsp;<i class="fas fa-book-reader"></i> #{rank} Section
+				li(class= profileActive ? 'active' : '')
+					a(href=`/users/${user}`) My Profile
+				li(class= assignmentsActive ? 'active' : '')
+					a(href=`/users/${user}/assignments`) Assignments
+				li(class= notesActive ? 'active' : '')
+					a(href=`/users/${user}/notes`) Notes
+				li(class= attActive ? 'active' : '')
+					a(href=`/users/${user}/attendance`) Attendance
+				li(class = dailyActive ? 'active' : '')
+					a(href=`/users/${user}/daily-logs`) Daily Logs
+				if (syllabusExists)
+					li(class= syllabusActive ? 'active' : '')
+						a(href=`/users/${user}/syllabus`) Syllabus
+				if (marksExists)
+					li(class= marksActive ? 'active' : '')
+						a(href=`/users/${user}/marks`) Marks
+			else if (rank === 'Instructor' || rank === 'Admin')
+				p &emsp;&emsp;<i class="fas fa-chalkboard-teacher"></i> #{rank} Section
+				li(class= profileActive ? 'active' : '')
+					a(href=`/instructors/${user}`) My Profile
+				li(class = announcementsActive ? 'active' : '')
+					a(href=`/instructors/${user}/announcements`) Announcements
+				li(class= assignmentsActive ? 'active' : '')
+					a(href=`/instructors/${user}/assignments`) Assignments
+				li(class= notesActive ? 'active' : '')
+					a(href=`/instructors/${user}/notes`) Notes
+				li(class= attActive ? 'active' : '')
+					a(href=`/instructors/${user}/attendance`) Attendance
+				li(class= dailyActive ? 'active' : '')
+					a(href=`/instructors/${user}/daily-logs`) Daily Logs
 			li <a href='/auth/logout'>Logout</a>
 		if (!home)
 			br
 			hr#section
 			p &emsp;&emsp;<i class="fas fa-balance-scale"></i> Legal Section
-			li(class= tos ? 'active' : '')
+			li(class= tosActive ? 'active' : '')
 				a(href='/terms') Terms and Conditions
-			li(class= privacy ? 'active' : '')
+			li(class= privacyActive ? 'active' : '')
 				a(href='/privacy') Privacy Policy
-			li(class= disclaimer ? 'active' : '')
+			li(class= disclaimerActive ? 'active' : '')
 				a(href='/disclaimer') Disclaimer
+			br
+			br
+			br
