@@ -1,0 +1,14 @@
+/* Import general CSS rules. */
+@import url('/css/templates/main.css');
+
+.block {
+	background-color: rgba(255, 255, 255, 0.75);
+	color: #000000;
+	padding: 2em 3em;
+	margin: 2em auto;
+	border-radius: 7vw;
+}
+
+.form-row {
+	margin: 2em auto;
+}
