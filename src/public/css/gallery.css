@@ -4,10 +4,10 @@
 .block {
 	color: #000000;
 	background-color: rgba(255, 255, 255, 0.75);
-	font-size: 2em;
-	border-radius: 7vw;
+	border-radius: 21px;
 	text-align: center;
-	padding: 5em;
+	padding: 1.5em;
+	margin: 2em auto;
 }
 
 /* Customizations for < md view. */
@@ -16,11 +16,19 @@
 		margin-top: 5.5em;
 		margin-bottom: 3em;
 	}
+
+	.gallery img {
+		margin: 1.5em auto !important;
+	}
 }
 
 /* Customizations for > md view. */
 @media screen and (min-width:768px) {
 	#header {
 		margin-bottom: 2.5em;
+	}
+
+	.block {
+		padding: 3em;
 	}
 }
