@@ -83,10 +83,10 @@ const attendanceDB = async (user, m) => {
 		calendar: []
 	};
 	const rawAttendance = await db.collection('data').doc('attendance').get()
-		.then(snap => snap.data()?.[user] ?? []);
+		.then(snap => snap.data()?.[user] ?? {});
 
 	let month = undefined;
-	if (m) month = moment(new Date().setMonth(m)).format('MMM').toLowerCase();
+	if (m) month = m;
 	else month = moment().format('MMM').toLowerCase();
 
 	Object.keys(rawAttendance).forEach(m => data.months.push(moment(m, 'MMM').format('MMMM YYYY')));
@@ -106,10 +106,14 @@ const attendanceDB = async (user, m) => {
 		week.push('\t');
 	}
 	for (let i = 1; i <= data.days; i++) {
+		// Mark attendance status for the student.
 		let status = undefined;
-		if (list[i - 1] === 'p') status = 'bg-success';
-		else if (list[i - 1] === 'a') status = 'bg-danger';
-		else if (list[i - 1] === 'h') status = 'bg-warning';
+		if (list.length) {
+			if (list[i - 1] === 'p') status = 'bg-success'; // Green
+			else if (list[i - 1] === 'a') status = 'bg-danger'; // Red
+			else if (list[i - 1] === 'h') status = 'bg-warning'; // Yellow
+		}
+
 		if (week.length < 7) {
 			week.push({ date: i, status });
 		} else {
@@ -142,37 +146,19 @@ module.exports = {
 		data.submissions = [];
 		const aData = await assignmentsDB(user);
 		aData.forEach(a => {
-			const currentMonth = moment.tz(new Date(), 'Asia/Kolkata').format('Do MMM, YYYY').split(' ')[1];
-			const dueMonth = a.due.split(' ')[1];
-			if (currentMonth === dueMonth) {
-				let due = a.due.slice(0, 4);
-				if (due.includes('th')) due = Number(a.due.split('th')[0]);
-				else if (due.includes('st')) due = Number(a.due.split('st')[0]);
-				else if (due.includes('rd')) due = Number(a.due.split('rd')[0]);
-				else if (due.includes('nd')) due = Number(a.due.split('nd')[0]);
-
-				const current = Number(moment.tz(new Date(), 'Asia/Kolkata').format('Do').split('th')[0]);
-				if (current <= due) {
-					return data.submissions.push(a);
-				}
-			}
+			const current = Number(moment.tz(new Date(), 'Asia/Kolkata').format('X'));
+			const due = Number(moment(a.due, 'Do MMM, dddd').tz('Asia/Kolkata').format('X'));
+			if (current < due) return data.submissions.push(a);
 			return undefined;
 		});
-		if (data.submissions.length > 2) {
-			data.submissions.splice(2);
-			data.moreSubmissions = true;
-		}
+		if (data.submissions.length > 2) data.submissions.splice(2);
 
 		data.newNotes = [];
 		const nData = await notesDB(user);
 		nData.forEach(n => {
-			const currentMonth = moment.tz(new Date(), 'Asia/Kolkata').format('Do MMM, YYYY').split(' ')[1];
-			const givenMonth = n.date.split(' ')[1];
-			if (currentMonth === givenMonth) {
-				const givenDate = Number(n.date.split('th')[0]);
-				const current = Number(moment.tz(new Date(), 'Asia/Kolkata').format('Do').split('th')[0]);
-				if (current - givenDate < 3) return data.newNotes.push(n);
-			}
+			const current = Number(moment.tz(new Date(), 'Asia/Kolkata').format('X'));
+			const given = Number(moment(n.date, 'Do MMM, dddd').tz('Asia/Kolkata').format('X'));
+			if ((current - given) < 259200) return data.newNotes.push(n); // 3 days = 259200 seconds.
 			return undefined;
 		});
 		if (data.newNotes.length > 2) data.newNotes.splice(2);
@@ -223,24 +209,25 @@ module.exports = {
 			return { err };
 		}
 
-		const currentMonth = Number(moment.tz(new Date(), 'Asia/Kolkata').format('M'));
-		const months = [
-			{
-				display: moment(currentMonth - 1, 'M').format('MMM YYYY'),
-				value: moment(currentMonth - 1, 'M').format('MMM').toLowerCase()
-			},
-			{
-				display: moment(currentMonth, 'M').format('MMM YYYY'),
-				value: moment(currentMonth, 'M').format('MMM').toLowerCase()
-			},
-			{
-				display: moment(currentMonth + 1, 'M').format('MMM YYYY'),
-				value: moment(currentMonth + 1, 'M').format('MMM').toLowerCase()
-			}
-		];
-		console.log(months);
-
-		const data = { name, photo, timetable, DOB, students: await students(), months };
+		const data = { name, photo, timetable, DOB, students: await students() };
 		return data;
+	},
+	att: async (user, month) => {
+		const calender = [];
+		const data = await attendanceDB(user, month);
+		for (const week of data.calendar) {
+			for (const day of week) {
+				if (day.date) {
+					let s = day.status;
+					if (s === 'bg-danger') s = 'a';
+					else if (s === 'bg-success') s = 'p';
+					else if (s === 'bg-warning') s = 'h';
+					else s = false;
+					calender.push({ d: day.date, s });
+				}
+			}
+		}
+		const { name } = await userDB(user);
+		return { calender, student: { name, username: user }, month: { month: data.month, id: month } };
 	}
 };
