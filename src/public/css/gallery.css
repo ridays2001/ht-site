@@ -10,6 +10,10 @@
 	margin: 2em auto;
 }
 
+.card img {
+	border-radius: 21px;
+}
+
 /* Customizations for < md view. */
 @media screen and (max-width: 767px) {
 	#header {
@@ -19,6 +23,10 @@
 
 	.gallery img {
 		margin: 1.5em auto !important;
+	}
+
+	.card {
+		padding: 0.45em 1em;
 	}
 }
 
@@ -30,5 +38,9 @@
 
 	.block {
 		padding: 3em;
+	}
+
+	.card {
+		padding: 1.25em;
 	}
 }
