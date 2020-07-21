@@ -11,31 +11,29 @@ block page
 		img.col-11.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
 
 	.container
-		.row
-			#main.container.text-center.col-md-6.block
-				h2 <i class="fas fa-sign-in-alt"></i> Log In
-				if (err.length > 0)
-					br
-					p#err=err
-				if (success.length > 0)
-					br
-					p#success=success
+		.text-center.col-md-6.block
+			h2 <i class="fas fa-sign-in-alt"></i> Log In
+			if (err.length > 0)
 				br
-				#form.block.mx-auto
-					form(action='/auth/login/', method='post')
-						.form-group.row.justify-content-center
-							label.col-3.col-form-label(for='username') Username
-							.input-group.col-8.col-md-6
-								.input-group-prepend
-									.input-group-text
-										i.far.fa-user(aria-hidden=true)
-								input.form-control(type='text', name='username', required)
-						.form-group.row.justify-content-center
-							label.col-3.col-form-label(for='pass') Password
-							.input-group.col-8.col-md-6
-								.input-group-prepend
-									.input-group-text
-										i.fas.fa-unlock(aria-hidden=true)
-								input.form-control(type='password', name='pass', required)
-						button.btn.btn-primary.mx-auto.col-8.col-md-2(type='submit') Log in
-
+				p#err=err
+			if (success.length > 0)
+				br
+				p#success=success
+			br
+			#form.mx-auto
+				form(action='/auth/login/', method='post')
+					.form-group.row.justify-content-center
+						label.col-3.col-form-label(for='username') Username
+						.input-group.col-8.col-md-6
+							.input-group-prepend
+								.input-group-text
+									i.far.fa-user(aria-hidden=true)
+							input.form-control(type='text', name='username', required)
+					.form-group.row.justify-content-center
+						label.col-3.col-form-label(for='pass') Password
+						.input-group.col-8.col-md-6
+							.input-group-prepend
+								.input-group-text
+									i.fas.fa-unlock(aria-hidden=true)
+							input.form-control(type='password', name='pass', required)
+					button.btn.btn-primary.mx-auto.col-8.col-md-2(type='submit') Log in

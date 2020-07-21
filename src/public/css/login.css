@@ -1,7 +1,8 @@
 /* Import general css rules. */
 @import url('/css/templates/main.css');
 
-#main {
+.block {
+	margin: 0 auto;
 	margin-top: 4em;
 	color: #000000;
 	background-color: rgba(255, 255, 255, 0.75);
@@ -19,6 +20,7 @@
     font-size: 1.2em;
 }
 
+
 /* Customizations for < md view. */
 @media screen and (max-width: 767px) {
 	.row {
@@ -27,10 +29,6 @@
 
 	#header {
 		margin-top: 6.5em;
-	}
-
-	.block {
-		margin-left: 2em;
 	}
 }
 
