@@ -10,5 +10,15 @@ block page
 	#header.text-center
 		img.col-11.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
 
-	.container.block
-		p Coming Soon...
+	.container-fluid
+		each album of events
+			.gallery.block
+				.row
+					h3.mx-auto #{album.name}
+				.row
+					p.mx-auto=album.desc
+				.row
+					.card-columns
+						each image of album.imgs
+							.card.my-2
+								img.card-img-top(src=image, alt='Gallery Image')
