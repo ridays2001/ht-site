@@ -31,10 +31,6 @@
 	text-align: justify;
 }
 
-#manage > li {
-	list-style-type: '⮚';
-}
-
 #manage > li > a:hover::after {
 	content: '→';
 	margin-left: 1em;
@@ -44,6 +40,10 @@
 @media screen and (max-width: 767px) {
 	#header {
 		margin-top: 5.5em;
+	}
+
+	#manage li {
+		list-style-type: square;
 	}
 }
 
@@ -58,5 +58,9 @@
 	}
 	.right {
 		margin-right: 5em;
+	}
+
+	#manage > li {
+		list-style-type: '⮚';
 	}
 }
