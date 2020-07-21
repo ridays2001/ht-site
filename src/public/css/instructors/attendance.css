@@ -1,0 +1,21 @@
+/* Import general CSS rules. */
+@import url('/css/templates/main.css');
+
+.block {
+	background-color: rgba(255, 255, 255, 0.75);
+	padding-top: 2em;
+	padding-bottom: 2em;
+	border-radius: 7vw;
+	margin-top: 2em;
+	color: #000000;
+}
+
+#err {
+    color: #f51b00;
+    font-size: 1.2em;
+}
+
+#success {
+    color: #0069d9;
+    font-size: 1.2em;
+}
