@@ -1,0 +1,77 @@
+extends ../templates/base
+
+block title
+	title Attendance - HT Online
+
+append css
+	link(rel='stylesheet', href='/css/instructors/attendance.css')
+
+block page
+	#header.text-center
+		img.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
+
+	.container.text-center.block
+			p Attendance of <u><b>#{student.name}</b></u> for the month of <u><b>#{month.month}</b></u>.
+			form(action=`/instructors/${user}/attendance-month`, method='post')
+				input(type='hidden', name='student', value=student.username)
+				input(type='hidden', name='month', value=month.id)
+				.row
+					each day of calender
+							.col-md-4.my-4
+								p #{day.d}
+								.custom-control.custom-radio
+									if (day.s === 'p')
+										input.custom-control-input(
+											id=`p${day.d}`,
+											type='radio',
+											name=`${day.d}`,
+											value='p',
+											checked
+										)
+									else
+										input.custom-control-input(
+											id=`p${day.d}`,
+											type='radio',
+											name=`${day.d}`,
+											value='p'
+										)
+									label.custom-control-label(for=`p${day.d}`) Present
+
+								.custom-control.custom-radio
+									if (day.s === 'a')
+										input.custom-control-input(
+											id=`a${day.d}`,
+											type='radio',
+											name=`${day.d}`,
+											value='a',
+											checked
+										)
+									else
+										input.custom-control-input(
+											id=`a${day.d}`,
+											type='radio',
+											name=`${day.d}`,
+											value='a'
+										)
+									label.custom-control-label(for=`a${day.d}`) Absent
+
+								.custom-control.custom-radio
+									if (day.s === 'h')
+										input.custom-control-input(
+											id=`h${day.d}`,
+											type='radio',
+											name=`${day.d}`,
+											value='h',
+											checked
+										)
+									else
+										input.custom-control-input(
+											id=`h${day.d}`,
+											type='radio',
+											name=`${day.d}`,
+											value='h'
+										)
+									label.custom-control-label(for=`h${day.d}`) Holiday
+				.row.col-8.mx-auto
+					button.btn.btn-primary.mx-auto(type='submit') &emsp;Submit&emsp;
+					button.btn.btn-danger.mx-auto(type='reset') &emsp;Reset&emsp;

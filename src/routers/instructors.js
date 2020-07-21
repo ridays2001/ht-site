@@ -3,7 +3,7 @@ require('moment-timezone');
 
 const sentry = require('../util/sentry');
 const { navData } = require('../util/navData');
-const { instructor } = require('../util/userData');
+const userData = require('../util/userData');
 const authenticate = require('../util/authenticate');
 const { firestore: db } = require('../util/db');
 
@@ -41,7 +41,7 @@ router.get('/:instructor', async (req, res) => {
 	if (!auth) return undefined;
 
 	const nav = await navData(req.cookies);
-	const data = await instructor(username);
+	const data = await userData.instructor(username);
 	return res.render('instructors/profile', { profileActive: true, ...data, ...nav });
 });
 
@@ -52,8 +52,10 @@ router.get('/:instructor/announcements', async (req, res) => {
 	if (!auth) return undefined;
 
 	const nav = await navData(req.cookies);
-	const data = await instructor(username);
-	return res.render('instructors/announcements', { announcementActive: true, ...data, ...nav });
+	const data = await userData.instructor(username);
+	return res.render('instructors/announcements', {
+		announcementActive: true, ...data, ...nav, success: await req.consumeFlash('success')
+	});
 });
 
 router.post('/:instructor/announcements', async (req, res) => {
@@ -65,6 +67,7 @@ router.post('/:instructor/announcements', async (req, res) => {
 		.then(snap => snap.data()?.[req.body.student] ?? []);
 	data.push(req.body);
 	await db.collection('data').doc('announcements').set({ [req.body.student]: data }, { merge: true });
+	await req.flash('success', `Successfully submitted announcement to ${req.body.student}`);
 	return res.redirect(`/instructors/${username}/announcements`);
 });
 
@@ -75,8 +78,10 @@ router.get('/:instructor/assignments', async (req, res) => {
 	if (!auth) return undefined;
 
 	const nav = await navData(req.cookies);
-	const data = await instructor(username);
-	return res.render('instructors/assignments', { assignmentsActive: true, ...data, ...nav });
+	const data = await userData.instructor(username);
+	return res.render('instructors/assignments', {
+		assignmentsActive: true, ...data, ...nav, success: await req.consumeFlash('success')
+	});
 });
 
 router.post('/:instructor/assignments', async (req, res) => {
@@ -92,6 +97,7 @@ router.post('/:instructor/assignments', async (req, res) => {
 		date: new Date(moment.tz(new Date(), 'Asia/Kolkata').format())
 	});
 	await db.collection('data').doc('assignments').set({ [req.body.student]: data }, { merge: true });
+	await req.flash('success', `Successfully submitted assignment to ${req.body.student}`);
 	return res.redirect(`/instructors/${username}/assignments`);
 });
 
@@ -102,8 +108,10 @@ router.get('/:instructor/notes', async (req, res) => {
 	if (!auth) return undefined;
 
 	const nav = await navData(req.cookies);
-	const data = await instructor(username);
-	return res.render('instructors/notes', { notesActive: true, ...data, ...nav });
+	const data = await userData.instructor(username);
+	return res.render('instructors/notes', {
+		notesActive: true, ...data, ...nav, success: await req.consumeFlash('success')
+	});
 });
 
 router.post('/:instructor/notes', async (req, res) => {
@@ -118,6 +126,7 @@ router.post('/:instructor/notes', async (req, res) => {
 		date: new Date(moment.tz(new Date(), 'Asia/Kolkata').format())
 	});
 	await db.collection('data').doc('notes').set({ [req.body.student]: data }, { merge: true });
+	await req.flash('success', `Successfully submitted notes to ${req.body.student}`);
 	return res.redirect(`/instructors/${username}/notes`);
 });
 
@@ -127,17 +136,55 @@ router.get('/:instructor/attendance', async (req, res) => {
 	const auth = await checkAuth(username, req, res);
 	if (!auth) return undefined;
 
+	const currentMonth = Number(moment.tz(new Date(), 'Asia/Kolkata').format('M'));
+	const months = [
+		{
+			display: moment(currentMonth - 1, 'M').format('MMM YYYY'),
+			value: moment(currentMonth - 1, 'M').format('MMM').toLowerCase()
+		},
+		{
+			display: moment(currentMonth, 'M').format('MMM YYYY'),
+			value: moment(currentMonth, 'M').format('MMM').toLowerCase()
+		},
+		{
+			display: moment(currentMonth + 1, 'M').format('MMM YYYY'),
+			value: moment(currentMonth + 1, 'M').format('MMM').toLowerCase()
+		}
+	];
+
 	const nav = await navData(req.cookies);
-	const data = await instructor(username);
-	return res.render('instructors/attendance', { attActive: true, ...data, ...nav });
+	const data = await userData.instructor(username);
+	return res.render('instructors/attendance', {
+		attActive: true, ...data, ...nav, months, success: await req.consumeFlash('success')
+	});
 });
 
-router.post('/:instructor/attendance', async (req, res) => {
-	console.log(req.body);
+router.get('/:instructor/attendance-month', async (req, res) => {
+	const username = req.params.instructor;
+	const { month, student } = req.query;
+	const attData = await userData.att(student, month);
+	const nav = await navData(req.cookies);
+	const data = await userData.instructor(username);
+	return res.render('instructors/attendance-month', {
+		attActive: true, ...attData, ...data, ...nav
+	});
+});
+
+router.post('/:instructor/attendance-month', async (req, res) => {
 	const username = req.params.instructor;
 	const auth = await checkAuth(username, req, res);
 	if (!auth) return undefined;
-	res.redirect(`/instructor/${username}/attendance`);
+	console.log(req.body);
+	const daysMarked = Object.keys(req.body).length - 2;
+	const list = [];
+	for (let i = 0; i < daysMarked; i++) {
+		list[i] = req.body[`${i + 1}`];
+	}
+	console.log(list);
+	const { student, month } = req.body;
+	await db.collection('data').doc('attendance').set({ [student]: { [month]: list } }, { merge: true });
+	await req.flash('success', `Successfully submitted the attendance of ${student} for the month of ${month}.`);
+	return res.redirect(`/instructors/${username}/attendance`);
 });
 
 // Daily logs section.
@@ -147,8 +194,10 @@ router.get('/:instructor/daily-logs', async (req, res) => {
 	if (!auth) return undefined;
 
 	const nav = await navData(req.cookies);
-	const data = await instructor(username);
-	return res.render('instructors/daily-logs', { dailyActive: true, ...data, ...nav });
+	const data = await userData.instructor(username);
+	return res.render('instructors/daily-logs', {
+		dailyActive: true, ...data, ...nav, success: await req.consumeFlash('success')
+	});
 });
 
 router.post('/:instructor/daily-logs', async (req, res) => {
@@ -167,6 +216,7 @@ router.post('/:instructor/daily-logs', async (req, res) => {
 		logs
 	});
 	await db.collection('data').doc('daily-logs').set({ [student]: data }, { merge: true });
+	await req.flash('success', `Successfully submitted daily logs to ${student}`);
 	return res.redirect(`/instructors/${username}/daily-logs`);
 });
 
