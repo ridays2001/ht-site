@@ -17,7 +17,7 @@ block page
 				input(type='hidden', name='month', value=month.id)
 				.row
 					each day of calender
-							.col-md-4.my-4
+							.col-6.col-md-4.my-4
 								p #{day.d}
 								.custom-control.custom-radio
 									if (day.s === 'p')

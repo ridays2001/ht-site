@@ -14,13 +14,13 @@ block page
 		.no-gutters.block
 			p.success #{success}
 			form(action=`/instructors/${user}/attendance-month`, method='get')
-				.form-row.text-center
-					.col-md-4.mx-auto
-						select.custom-select.col-8.mx-auto#student(name='student', required)
+				.form-row.text-center.form-group
+					.col-8.col-md-4.mx-auto
+						select.custom-select#student(name='student', required)
 							option(selected, value=undefined) Select a student.
 							each s of students
 								option(value=s.username)=`➢ ${s.name}`
-					.col-md-3.mx-auto
+					.col-8.col-md-3.mx-auto
 						input#currentMonth(type='hidden', value=month)
 						select#newMonth.custom-select.my-2.mx-auto(name='month', required)
 							each m, i in months
@@ -28,5 +28,5 @@ block page
 									option(value=m.value, selected)=m.display
 								else
 									option(value=m.value)=m.display
-				.form-row.text-center
+				.form-row.text-center.form-group
 					button.btn.btn-primary.mx-auto(type='submit') Mark Attendance

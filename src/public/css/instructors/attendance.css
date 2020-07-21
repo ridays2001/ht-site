@@ -19,3 +19,24 @@
     color: #0069d9;
     font-size: 1.2em;
 }
+
+/* Customizations for < md view. */
+@media screen and (max-width: 767px) {
+	#header {
+		margin-top: 5.5em;
+	}
+}
+
+/* Customizations for > md view. */
+@media screen and (min-width: 768px) {
+	#students {
+		padding: 2em 3em;
+	}
+
+	.left {
+		margin-left: 2.5em;
+	}
+	.right {
+		margin-right: 5em;
+	}
+}
