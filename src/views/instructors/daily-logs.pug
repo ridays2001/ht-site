@@ -14,6 +14,7 @@ block page
 
 	.container-fluid
 		.row.no-gutters
+			p.success #{success}
 			#form.block.mx-auto.text-center.col-md-8
 				h2.text-center Daily Logs
 				form(action=`/instructors/${user}/daily-logs`, method='post')

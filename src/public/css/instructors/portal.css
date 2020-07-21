@@ -12,3 +12,13 @@
 .form-row {
 	margin: 2em auto;
 }
+
+#err {
+    color: #f51b00;
+    font-size: 1.2em;
+}
+
+#success {
+    color: #0069d9;
+    font-size: 1.2em;
+}
