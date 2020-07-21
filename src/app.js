@@ -73,9 +73,18 @@ app.get('/gallery', async (req, res) => {
 });
 
 // Legal section.
-app.get('/terms', (_req, res) => res.render('legal/terms'));
-app.get('/privacy', (_req, res) => res.render('legal/privacy'));
-app.get('/disclaimer', (_req, res) => res.render('legal/disclaimer'));
+app.get('/terms', async (req, res) => {
+	const nav = await navData(req.cookies);
+	return res.render('legal/terms', { tosActive: true, ...nav });
+});
+app.get('/privacy', async (req, res) => {
+	const nav = await navData(req.cookies);
+	return res.render('legal/privacy', { privacyActive: true, ...nav });
+});
+app.get('/disclaimer', async (req, res) => {
+	const nav = await navData(req.cookies);
+	return res.render('legal/disclaimer', { disclaimerActive: true, ...nav });
+});
 
 // Redirect common paths for terms and conditions.
 app.get('/tos', (_req, res) => res.redirect(301, '/terms'));
