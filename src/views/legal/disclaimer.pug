@@ -1,65 +1,64 @@
-html(lang="en")
-	head
-		meta(charset="UTF-8")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
-		link(rel='shortcut icon', href='/imgs/icon2.png', type='image/x-icon')
-		title Disclaimer - HT Online
-		link(rel='stylesheet', href='/css/legal.css')
-	body
-		div#main
-			a#home(href='/') ⬅ Home
-			h1 Disclaimer
+extends ../templates/base
 
-			div#consent
-				h2 Consent
-				p By using https://htonline.ml/, you hereby consent to our disclaimer and agree to its terms.
+block title
+	title Disclaimer - HT Online
 
-				p We will not be liable for any damages experienced in connection with the use of our website.
+append css
+	link(rel='stylesheet', href='/css/legal.css')
 
-				p If you do not agree to our Disclaimer STOP now and do not access or use this website.
+block page
+	#header.text-center
+		img.col-md-4(src='/imgs/logo-white.png', alt='Himaani Shah Tutorials')
 
-			br
-			br
+	#main.container.mb-5
+		h1.text-center.mb-5.mt-2 Disclaimer
 
-			div#info
-				h2 Educational and Informational Purposes
-				p.
-					The information contained on this website is intended for educational and informational purposes only.
-					&nbsp;It is not intended to be a substitute of either the written law or regulations.
+		#consent
+			h4 Consent
+			p By using https://htonline.ml/, you hereby consent to our disclaimer and agree to its terms.
+			p We will not be liable for any damages experienced in connection with the use of our website.
+			p If you do not agree to our Disclaimer, <b>STOP</b> now and do not access or use this website.
 
 			br
 			br
 
-			div#links
-				h2 External Links
-				p.
-					Some links on this website connect to external websites which are maintained by third parties.
-					&nbsp;We are not responsible for any of the information provided by a third party website.
-
-				p.
-					You are subject to the terms and conditions, disclaimer, and privacy policy of the third party
-					websites when you leave our website.
+		#info
+			h4 Educational and Informational Purposes
+			p.
+				The information contained on this website is intended for educational and informational purposes only.
+				&nbsp;It is not intended to be a substitute of either the written law or regulations.
 
 			br
 			br
 
-			div#responsibility
-				h2 Personal Responsibility
-				p.
-					You acknowledge you are using our website voluntarily and that any choices, actions and results now
-					and in the future are solely your responsibility.
-
-				p.
-					We will not be liable to you or any other party for any decision made or action taken in reliance on
-					the information given by our service.
+		#links
+			h4 External Links
+			p.
+				Some links on this website connect to external websites which are maintained by third parties.
+				&nbsp;We are not responsible for any of the information provided by a third party website.
+			p.
+				You are subject to the terms and conditions, disclaimer, and privacy policy of the third party
+				websites when you leave our website.
 
 			br
 			br
 
-			div#contact
-				h2 Contact
-				p.
-					By using our website you are agreeing to the above disclaimer.
-					Should you have any queries regarding anything in this disclaimer please
-					<a href='/contact'>contact us↗</a>.
+		#responsibility
+			h4 Personal Responsibility
+			p.
+				You acknowledge you are using our website voluntarily and that any choices, actions and results now
+				and in the future are solely your responsibility.
+			p.
+				We will not be liable to you or any other party for any decision made or action taken in reliance on
+				the information given by our service.
+
+			br
+			br
+
+		#contact
+			h4 Contact
+			p.
+				By using our website you are agreeing to the above disclaimer.
+				Should you have any queries regarding anything in this disclaimer please
+				<a href='/contact'>contact us↗</a>.
 
