@@ -66,7 +66,10 @@ app.get('/', async (req, res) => {
 
 app.get('/gallery', async (req, res) => {
 	const nav = await navData(req.cookies);
-	return res.render('gallery', { galleryActive: true, ...nav });
+	const data = await db.collection('data').doc('gallery').get()
+		.then(snap => snap.data() ?? {});
+	data.events.reverse();
+	return res.render('gallery', { galleryActive: true, ...data, ...nav });
 });
 
 // Legal section.
