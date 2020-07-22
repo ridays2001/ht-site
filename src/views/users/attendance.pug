@@ -48,7 +48,7 @@ block page
 block script-2
 	script.
 		$('#change').on('submit', () => {
-			if ($('#newMonth').val() === $('#currentMonth')) {
+			if ($('#newMonth').val() === $('#currentMonth').val()) {
 				alert('Please select a new month!');
 				return false;
 			}
