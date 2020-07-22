@@ -2,7 +2,10 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat+square)](http://makeapullrequest.com)
 
 ### Live version:
-The live version of the site can be found [here↗](https://htonline.ml/).\
+The live version of the site can be found [here↗](https://htonline.ml/).
+
+<br>
+
 *Username* - test\
 *Password* - test
 
