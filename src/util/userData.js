@@ -146,8 +146,9 @@ module.exports = {
 		data.submissions = [];
 		const aData = await assignmentsDB(user);
 		aData.forEach(a => {
+			// We add one day to the due date because the day timestamp accounts for 00:00 midnight.
 			const current = Number(moment.tz(new Date(), 'Asia/Kolkata').format('X'));
-			const due = Number(moment(a.due, 'Do MMM, dddd').tz('Asia/Kolkata').format('X'));
+			const due = Number(moment(a.due, 'Do MMM, dddd').tz('Asia/Kolkata').format('X')) + 86400;
 			if (current < due) return data.submissions.push(a);
 			return undefined;
 		});
