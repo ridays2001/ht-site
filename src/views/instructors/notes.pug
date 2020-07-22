@@ -12,8 +12,8 @@ block page
 
 	.container-fluid
 		.row.no-gutters
-			p.success #{success}
 			#form.block.mx-auto.text-center.col-md-8
+				p.success.mx-auto.text-success #{success}
 				h2.text-center Send Notes
 				form(action=`/instructors/${user}/notes`, method='post')
 					.form-row.form-group
