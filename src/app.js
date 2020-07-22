@@ -47,7 +47,6 @@ app.use(session({
 	secret: process.env.SECRET,
 	cookie: {
 		sameSite: 'lax',
-		// secure: true,
 		httpOnly: true,
 		maxAge: 3600000
 	},
