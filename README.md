@@ -4,7 +4,7 @@
 ### Live version:
 The live version of the site can be found [here↗](https://htonline.ml/).\
 *Username* - test\
-*Password* - test\
+*Password* - test
 
 <br>
 
