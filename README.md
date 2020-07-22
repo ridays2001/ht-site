@@ -1,12 +1,14 @@
 # HT - Site
-A site for the home tuitions run by my sister.\
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat+square)](http://makeapullrequest.com)
-
 
 ### Live version:
 The live version of the site can be found [here↗](https://htonline.ml/).
 *Username* - test
 *Password* - test
+
+<br>
+
+![A student portal site for my sister's home tutorials.](https://i.imgur.com/7bNJG9w.jpg)
 
 ### Technologies used:
 *Backend:*
