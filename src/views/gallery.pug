@@ -3,6 +3,17 @@ extends templates/base
 block title
 	title Gallery - HT Online
 
+append meta
+	meta(property='og:url', content='https://htonline.ml/gallery/')
+	meta(property='og:type', content='portal')
+	meta(property='og:title', content='Photo Gallery - HT Online')
+	meta(property='og:description', content='A photo gallery to display the amazing talent of children.')
+
+	meta(name='twitter:card', content='A photo gallery to display the amazing talent of children.')
+	meta(name='twitter:url', content='https://htonline.ml/gallery/')
+	meta(name='twitter:title', content='Photo Gallery - HT Online')
+	meta(name='twitter:description', content='A photo gallery to display the amazing talent of children.')
+
 append css
 	link(rel='stylesheet', href='/css/gallery.css')
 
