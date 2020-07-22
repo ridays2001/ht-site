@@ -29,6 +29,14 @@ router.post('/', async (req, res) => {
 	if (email) description += `\n**__Email__** - ${email}`;
 	if (phone) description += `\n**__Phone Number__** - ${phone}`;
 
+	/**
+	 * 		<-- Discord Webhook Section -->
+	 * Remove the next try and catch block if you want to opt out of this section.
+	 * Please note that opting out of this would make your contact form practically useless.
+	 * Since we are running our app on free tier, there are very few options.
+	 * I have selected Discord Webhooks since I am really active on Discord.
+	*/
+
 	// Send the contact form information to a discord webhook.
 	try {
 		await fetch(`${process.env.WB}`, {
@@ -58,6 +66,10 @@ router.post('/', async (req, res) => {
 	} catch (err) {
 		sentry.captureException(err);
 		console.log(err);
+		return res.send(
+			500,
+			'Internal Server Error.\nPlease use some other mode of contact. We will look onto this issue soon.'
+		);
 	}
 });
 
