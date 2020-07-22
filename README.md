@@ -115,9 +115,9 @@ Thank you for contributing. 💙
 &copy; 2020 Riday.
 <br/><br/>
 
-<div style='display: flex;'>
-<img src="https://img.icons8.com/color/48/000000/discord-new-logo.png"/> <span style='font-size: 2em;'> Riday 💙#7468</span>
-</div>
+<a href='https://discord.gg/muuyMD9'>
+	<img src='https://i.imgur.com/0Ed3Cct.png' width='300' alt='Discord - Riday 💙#7468'>
+</a>
 
 [1]:https://nodejs.org/en "Node.js official site."
 [2]:https://console.firebase.google.com/ "Google firebase console."
