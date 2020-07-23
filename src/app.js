@@ -24,7 +24,7 @@ const express = require('express');
 const app = express();
 
 app.set('port', process.env.PORT ?? 80); // Use port 80 for hosting.
-app.set('trust proxy', true); // Trust proxies for security.
+app.set('trust proxy', 1); // Trust first proxy for security.
 
 // Views section.
 app.set('views', path.join(__dirname, './views')); // Configure views folder to use for view engine.
