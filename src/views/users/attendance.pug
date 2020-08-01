@@ -12,12 +12,15 @@ block page
 
 	.container.block
 		.col-md-6.mx-auto#form
-			form#change.form-inline.my-3(action=`/users/${user}/attendance`, method='post')
+			form#change.form-inline.my-3(action=`/users/${user}/attendance`, method='get')
 				input#currentMonth(type='hidden', value=month)
 				.col-6
 					select#newMonth.custom-select.my-2.mx-auto(name='month', required)
 						each m of months
-							option(value=m)=m
+							if (m.display === month)
+								option(value=m.value selected)=m.display
+							else
+								option(value=m.value)=m.display
 				.col-6
 					button.btn.btn-primary.my-2.mx-auto(type='submit') Change Month
 
