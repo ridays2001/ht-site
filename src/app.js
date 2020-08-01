@@ -7,7 +7,6 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const { flash } = require('express-flash-message');
-const userAgent = require('express-useragent');
 const logger = require('morgan');
 const helmet = require('helmet');
 const compression = require('compression');
@@ -33,7 +32,6 @@ app.set('view engine', 'pug'); // Set view engine to pug.
 // Middleware section.
 app.use(sentry.Handlers.requestHandler()); // Use sentry.
 app.use(sentry.Handlers.tracingHandler()); // Use sentry.
-app.use(userAgent.express()); // Parse user agent to find out device names, etc.
 app.use(express.json()); // Parse incoming json requests.
 app.use(express.urlencoded({ extended: true })); // Parse the incoming requests to urlencoded payloads
 app.use(logger('dev')); // Use morgan logger to log http requests.
