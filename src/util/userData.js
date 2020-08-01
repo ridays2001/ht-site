@@ -85,11 +85,23 @@ const attendanceDB = async (user, m) => {
 	const rawAttendance = await db.collection('data').doc('attendance').get()
 		.then(snap => snap.data()?.[user] ?? {});
 
+	const currentMonth = moment.tz(new Date(), 'Asia/Kolkata').format('MMM').toLowerCase();
 	let month = undefined;
 	if (m) month = m;
-	else month = moment().format('MMM').toLowerCase();
+	else month = currentMonth;
 
-	Object.keys(rawAttendance).forEach(m => data.months.push(moment(m, 'MMM').format('MMMM YYYY')));
+	Object.keys(rawAttendance).forEach(m => {
+		data.months.push({
+			display: moment(m, 'MMM').format('MMMM YYYY'),
+			value: m
+		});
+	});
+	if (!Object.keys(rawAttendance).includes(currentMonth)) {
+		data.months.push({
+			display: moment(currentMonth, 'MMM').format('MMMM YYYY'),
+			value: currentMonth
+		});
+	}
 
 	const list = rawAttendance[month];
 	data.present = list?.filter(a => a === 'p')?.length ?? 0;
@@ -100,6 +112,8 @@ const attendanceDB = async (user, m) => {
 	data.month = moment(month, 'MMM').format('MMMM YYYY');
 	data.days = moment(month, 'MMM').daysInMonth();
 
+	if (data.present + data.absent === 0) data.percent = 100.00;
+
 	const dayOffset = moment(month, 'MMM').startOf('month').format('d');
 	let week = [];
 	for (let i = 0; i < dayOffset; i++) {
@@ -108,7 +122,7 @@ const attendanceDB = async (user, m) => {
 	for (let i = 1; i <= data.days; i++) {
 		// Mark attendance status for the student.
 		let status = undefined;
-		if (list.length) {
+		if (list?.length) {
 			if (list[i - 1] === 'p') status = 'bg-success'; // Green
 			else if (list[i - 1] === 'a') status = 'bg-danger'; // Red
 			else if (list[i - 1] === 'h') status = 'bg-warning'; // Yellow
