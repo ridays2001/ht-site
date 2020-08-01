@@ -66,7 +66,9 @@ router.get('/:user/attendance', async (req, res) => {
 	const user = req.params.user;
 	const auth = await checkAuth(user, req, res);
 	if (!auth) return undefined;
-	const data = await userData.attendance(user);
+	let data = {};
+	if (req.query.month) data = await userData.attendance(user, req.query.month);
+	else data = await userData.attendance(user);
 	const nav = await navData(req.cookies);
 	return res.render('users/attendance', { attActive: true, ...data, ...nav });
 });
