@@ -1,4 +1,3 @@
-
 const authenticate = require('../util/authenticate');
 const { firestore: db } = require('../util/db');
 const { navData } = require('../util/navData');
@@ -36,7 +35,8 @@ router.post('/login', async (req, res) => {
 	const { auth, rank } = await authenticate({
 		username: req.body.username,
 		password: req.body.pass,
-		id: req.session.id
+		id: req.session.id,
+		ua: req.headers['user-agent']
 	}, undefined);
 
 	if (auth) {
@@ -69,9 +69,12 @@ router.get('/logout', async (req, res) => {
 	const { username, id } = req.cookies;
 	if (username) res.cookie('username', undefined, { maxAge: 100 });
 	if (id) res.cookie('id', undefined, { maxAge: 100 });
+	if (!username) return res.redirect('/auth/login');
 	const data = await db.collection('users').doc(username).get()
 		.then(snap => snap.data()?.data);
-	data.id.splice(data.id.indexOf(id), 1);
+
+	const ids = data?.saved?.map(s => s.id) ?? [];
+	data.saved.splice(ids.indexOf(id), 1);
 	await db.collection('users').doc(username).set({ data }, { merge: true });
 	await req.flash('success', '✅ Logged out successfully.');
 	return res.redirect('/auth/login');
