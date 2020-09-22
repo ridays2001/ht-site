@@ -36,6 +36,9 @@ nav#sidebar(data-simplebar)
 				if (marksExists)
 					li(class= marksActive ? 'active' : '')
 						a(href=`/users/${user}/marks`) Marks
+				if (pointsExists)
+					li(class= pointsActive ? 'active' : '')
+						a(href=`${pointsLink}`) Points
 			else if (rank === 'Instructor' || rank === 'Admin')
 				p &emsp;&emsp;<i class="fas fa-chalkboard-teacher"></i> #{rank} Section
 				li(class= profileActive ? 'active' : '')

@@ -12,6 +12,7 @@ exports.navData = async cookies => {
 	let rank = undefined;
 	let marksExists = false;
 	let syllabusExists = false;
+	let pointsExists = false;
 
 	const data = await db.collection('users').doc(user).get()
 		.then(snap => snap.data()?.data);
@@ -29,11 +30,13 @@ exports.navData = async cookies => {
 	data.syllabus = await syllabus(user);
 	if (data.marks) marksExists = true;
 	if (data.syllabus) syllabusExists = true;
+	if (data.pointsLink) pointsExists = true;
 
 	return {
 		rank,
 		marksExists,
 		syllabusExists,
+		pointsExists,
 		user
 	};
 };
