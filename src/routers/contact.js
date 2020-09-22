@@ -45,7 +45,6 @@ router.post('/', async (req, res) => {
 				tts: false,
 				embeds: [
 					{
-						title: 'Test',
 						author: {
 							name: `From - ${name}`
 						},
