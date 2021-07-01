@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 exports.wakeUp = () => {
 	setTimeout(async () => {
 		try {
-			return await fetch('https://htonline.ml/').then(_res => console.log('App persisted for another 25 mins.'));
+			return await fetch('https://ht-site.herokuapp.com/').then(_res => console.log('App persisted for another 25 mins.'));
 		} catch (err) {
 			return console.log('Error fetching the page.');
 		} finally {

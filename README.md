@@ -1,13 +1,13 @@
 # HT - Site
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat+square)](http://makeapullrequest.com)
 
-This project dates back to 22nd June 2020, but was recently rebased and force updated due to some issues.
+This project dates back to 22nd June 2020, but was recently rebased and force updated due to some security issues.
 ---
 
 <br>
 
 ### Live version:
-The live version of the site can be found [here↗](https://htonline.ml/).
+The live version of the site can be found [here↗](https://ht-site.herokuapp.com/).
 
 <br>
 
