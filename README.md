@@ -16,8 +16,6 @@ The live version of the site can be found [here↗](https://ht-site.herokuapp.co
 
 <br>
 
-![A student portal site for my sister's home tutorials.](https://i.imgur.com/7bNJG9w.jpg)
-
 ### Technologies used:
 *Backend:*
 + Javascript (Node.js - Main)
